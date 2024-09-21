@@ -7,9 +7,10 @@ import sys
 import run_smart_gate as rsg
 
 import os
-import azure.cognitiveservices.speech as speechsdk
+#import azure.cognitiveservices.speech as speechsdk
 
 import threading
+from jinja2 import Environment, FileSystemLoader
 
 STATIC = './motions'
 
@@ -30,38 +31,43 @@ system_prompt_2="""You are a gate keeping robot.
                 """
 
 
+env = Environment(loader = FileSystemLoader('templates'))
+copilot_template = env.get_template('copilot.html')
+home_template = env.get_template('home.html')
+last_event_template = env.get_template('last_event.html')
+
 # This example requires environment variables named "SPEECH_KEY" and "SPEECH_REGION"
-speech_config = speechsdk.SpeechConfig(subscription=os.environ.get('SPEECH_KEY'), region=os.environ.get('SPEECH_REGION'))
-audio_config = speechsdk.audio.AudioOutputConfig(use_default_speaker=True)
+#speech_config = speechsdk.SpeechConfig(subscription=os.environ.get('SPEECH_KEY'), region=os.environ.get('SPEECH_REGION'))
+#audio_config = speechsdk.audio.AudioOutputConfig(use_default_speaker=True)
 
 # The neural multilingual voice can speak different languages based on the input text.
-speech_config.speech_synthesis_voice_name='en-US-AvaMultilingualNeural'
+#speech_config.speech_synthesis_voice_name='en-US-AvaMultilingualNeural'
 
 #speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
-speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, audio_config=None)
+#speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, audio_config=None)
 
 def say_it(text = "Speech system test"):
-
-    speech_synthesis_result = speech_synthesizer.speak_text_async(text).get()
+    pass
+    # speech_synthesis_result = speech_synthesizer.speak_text_async(text).get()
     
-    stream = speechsdk.AudioDataStream(speech_synthesis_result)
+    # stream = speechsdk.AudioDataStream(speech_synthesis_result)
 
-    save_to = f"{STATIC}/latest.wav"
-    print("SaveTO: ", save_to)
+    # save_to = f"{STATIC}/latest.wav"
+    # print("SaveTO: ", save_to)
 
-    stream.save_to_wav_file(save_to)
+    # stream.save_to_wav_file(save_to)
     
-    if speech_synthesis_result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
-        print("Speech synthesized for text [{}]".format(text))
-    elif speech_synthesis_result.reason == speechsdk.ResultReason.Canceled:
-        cancellation_details = speech_synthesis_result.cancellation_details
-        print("Speech synthesis canceled: {}".format(cancellation_details.reason))
-        if cancellation_details.reason == speechsdk.CancellationReason.Error:
-            if cancellation_details.error_details:
-                print("Error details: {}".format(cancellation_details.error_details))
-                print("Did you set the speech resource key and region values?")
+    # if speech_synthesis_result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
+    #     print("Speech synthesized for text [{}]".format(text))
+    # elif speech_synthesis_result.reason == speechsdk.ResultReason.Canceled:
+    #     cancellation_details = speech_synthesis_result.cancellation_details
+    #     print("Speech synthesis canceled: {}".format(cancellation_details.reason))
+    #     if cancellation_details.reason == speechsdk.CancellationReason.Error:
+    #         if cancellation_details.error_details:
+    #             print("Error details: {}".format(cancellation_details.error_details))
+    #             print("Did you set the speech resource key and region values?")
 
-@app.route('/call_copilot', methods=['POST'])
+@app.route('/call_copilot', methods=['POST', 'GET'])
 def call_copilot():
     
     content = json.loads(request.data)
@@ -72,7 +78,7 @@ def call_copilot():
     #response = {"response": "yes"}
 
 
-    events_root_dir = find_latest_event()
+    events_root_dir = find_latest_event()[0]
 
     print(f"events_root_dir: {events_root_dir}")
 
@@ -116,88 +122,18 @@ def call_copilot():
 
 @app.route('/copilot')
 def copilot():
-    latest_event = find_latest_event()
+
+    event_id = request.args.get('event_id') 
+
+    latest_event = event_id #find_latest_event()
 
     images = dump_images(latest_event)
 
-    call_copilot_func = """
+    copilot_html = copilot_template.render(latest_event = latest_event, 
+                                            system_prompt=system_prompt,
+                                            images = images)
 
-
-
-        function call_copilot(){
-                    
-            const apiUrl = '/call_copilot';
-
-            document.getElementById("system_prompt").disabled = true;
-            document.getElementById("call_copilot").disabled = true;
-            fetch(apiUrl,{
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                prompt: document.getElementById("system_prompt").value
-                            })
-                        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-                document.getElementById("llm_response").innerHTML = JSON.stringify(data)
-
-                var combined_prompt = document.getElementById("system_prompt").value.trim();
-                combined_prompt = combined_prompt + '\\n\\n'+JSON.stringify(data)+'\\n\\n';
-                console.log(combined_prompt);
-
-                document.getElementById("system_prompt")
-                document.getElementById("system_prompt").value = combined_prompt;
-
-                document.getElementById("say_it").src = 'motions/latest.wav?t=' + new Date().getTime();
-                document.getElementById("say_it").play();
-                document.getElementById("call_copilot").disabled = false;
-                document.getElementById("system_prompt").disabled = false;
-
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById("llm_response").innerHTML = '<b>Error: '+error+'</b>'
-            });
-        }
-    """
-
-    return f"""
-    <html>
-        <body>
-            <center><h1>{latest_event}</h1></center>
-            <table border=1 width='100%'>
-                <tr>
-                    <td width='50%'>
-                        <h2>System Prompt:</h2>
-                        <textarea cols='100' rows='15' id='system_prompt'>{system_prompt}</textarea>
-                        <h2>Data:</h2>
-                        <div>
-                        {images}
-                        </div>
-                    </td>
-                    <td>
-                        <div id='llm_response'>&nbsp;</div>
-                    </td>
-                </tr>
-            </table>
-            <center>
-                <input type='button' id='call_copilot' value='Submit' style='height:50px;width:200px' onclick='call_copilot()'/>
-            </center>
-            <script language='javascript'>
-                {call_copilot_func}
-            </script>
-            <audio id="say_it" src="motions/latest.wav"></audio>
-        </body>
-    </html>
-    """
+    return copilot_html
 
 
 def find_latest_event():
@@ -208,7 +144,7 @@ def find_latest_event():
         if os.path.isdir(file_path):
             dirs.append(file_path)
 
-    return sorted(dirs, key=lambda x: os.path.getctime(x), reverse=True)[0]
+    return sorted(dirs, key=lambda x: os.path.getctime(x), reverse=True)
 
 
 def dump_images(directory):
@@ -224,76 +160,31 @@ def dump_images(directory):
 @app.route('/last_event')
 def last_event():
 
-    directory = find_latest_event()
+    directory = find_latest_event()[0]
     
     print("Latest event dir:", directory)
     
-    
     images = dump_images(directory)
 
-    return f"""
-    <html>
-        <body>
-            <center><h1>{directory}</h1></center>
-            
-            <table border=1 width='100%' >
-                <tr>
-                    <td align='center' valign='center' width='75%'>
-                        {images}
-                    </td>
-                    <td>
-                        {"<br/>".join(os.listdir(directory))}
-                    </td>
-                </tr>
-            </table>    
-        </body>
-    </html>
-    """
+    dir_list = "<br/>".join(os.listdir(directory))
+
+    return last_event_template.render(directory = directory, 
+                                        images = images, 
+                                        file_names = dir_list)
+
 
 @app.route('/')
 def home():
+    recent_events = ""
 
+    directories = find_latest_event()
 
-    
+    i = 0
+    for dir in directories:
+        recent_events += f"<br/><a href='copilot?event_id={dir}'>{dir}</a>"
+        
 
-
-    return """
-        <html>
-            <body>
-                <table width='100%' height='100%' border=1 align='center' valign='center' >
-                    <tr>
-                        <th>
-                            <h1>
-                                Current View
-                            </h1>
-                        </th>
-                        <th>
-                            <h1>Last Motion</h1>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td align='center' valign='center' >
-                            <img src='motions/current_frame.png' id='current_frame'/>
-                        </td>
-                        <td align='center' valign='center' >    
-                           <img src='motions/event_current.png' id='event_current'/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan=2 width='100%'>
-                            <iframe src="/last_event" width='100%' height='3000px' id='last_events'></iframe>
-                        </td>
-                    </tr>
-                </table>
-                
-                <script language='javascript'>
-                    setInterval(function () {document.getElementById("current_frame").src = 'motions/current_frame.png?t=' + new Date().getTime();}, 300);
-                    setInterval(function () {document.getElementById("event_current").src = 'motions/event_current.png?t=' + new Date().getTime();}, 300);
-                    setInterval(function () {document.getElementById("last_events").contentWindow.location.reload()}, 3000);
-                </script>
-            </body>
-        </html>
-    """
+    return home_template.render(recent_events = recent_events)
 
 if __name__ == '__main__':
     app.run(debug=True)

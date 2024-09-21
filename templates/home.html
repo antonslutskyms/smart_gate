@@ -1,0 +1,43 @@
+<html>
+    <body>
+        <table width='100%' height='100%' border=1 align='center' valign='center' >
+            <tr>
+                <th>
+                    <h1>
+                        Current View
+                    </h1>
+                </th>
+                <th>
+                    <h1>Last Motion</h1>
+                </th>
+                <th>
+                    <h1>Recent Events</h1>
+                </th>
+            </tr>
+            <tr>
+                <td align='center' valign='center' >
+                    <img src='motions/current_frame.png' id='current_frame'/>
+                </td>
+                <td align='center' valign='center' >    
+                    <img src='motions/event_current.png' id='event_current'/>
+                </td>
+                <td>
+                    <div style="overflow-y: scroll; height:400px;">
+                        {{recent_events}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan=3 width='100%'>
+                    <iframe src="/last_event" width='100%' height='3000px' id='last_events'></iframe>
+                </td>
+            </tr>
+        </table>
+        
+        <script language='javascript'>
+            setInterval(function () {document.getElementById("current_frame").src = 'motions/current_frame.png?t=' + new Date().getTime();}, 300);
+            setInterval(function () {document.getElementById("event_current").src = 'motions/event_current.png?t=' + new Date().getTime();}, 300);
+            setInterval(function () {document.getElementById("last_events").contentWindow.location.reload()}, 3000);
+        </script>
+    </body>
+</html>

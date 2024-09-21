@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <script language="javascript">
+            function call_copilot(){
+                    
+                    const apiUrl = '/call_copilot';
+        
+                    document.getElementById("system_prompt").disabled = true;
+                    document.getElementById("call_copilot").disabled = true;
+                    fetch(apiUrl,{
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        prompt: document.getElementById("system_prompt").value
+                                    })
+                                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data);
+                        document.getElementById("llm_response").innerHTML = JSON.stringify(data)
+        
+                        var combined_prompt = document.getElementById("system_prompt").value.trim();
+                        combined_prompt = combined_prompt + '\\n\\n'+JSON.stringify(data)+'\\n\\n';
+                        console.log(combined_prompt);
+        
+                        document.getElementById("system_prompt")
+                        document.getElementById("system_prompt").value = combined_prompt;
+        
+                        document.getElementById("say_it").src = 'motions/latest.wav?t=' + new Date().getTime();
+                        document.getElementById("say_it").play();
+                        document.getElementById("call_copilot").disabled = false;
+                        document.getElementById("system_prompt").disabled = false;
+        
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById("llm_response").innerHTML = '<b>Error: '+error+'</b>'
+                    });
+                }
+        </script>
+    </head>
+    <body>
+        <center><h1>{{latest_event}}</h1></center>
+        <table border=1 width='100%'>
+            <tr>
+                <td width='50%'>
+                    <h2>System Prompt:</h2>
+                    <textarea cols='100' rows='15' id='system_prompt'>{{system_prompt}}</textarea>
+                    <h2>Data:</h2>
+                    <div>
+                    {{images}}
+                    </div>
+                </td>
+                <td>
+                    <div id='llm_response'>&nbsp;</div>
+                </td>
+            </tr>
+        </table>
+        <center>
+            <input type='button' id='call_copilot' value='Submit' style='height:50px;width:200px' onclick='call_copilot()'/>
+        </center>
+        <audio id="say_it" src="motions/latest.wav"></audio>
+    </body>
+</html>
