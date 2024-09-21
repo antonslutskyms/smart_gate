@@ -56,12 +56,12 @@ if __name__ == "__main__":
 
         image = ImageDraw.Draw(image)
 
-        font = ImageFont.truetype("sans-serif.ttf", 16)
+        font = ImageFont.truetype("sans-serif.ttf", 26)
 
-        image.text((0, 0),f"D: {round(d, 5)}",(255,255,255),font=font)
+        image.text((0, 0),f"D: {round(d, 5)}",(102,255,0),font=font)
 
         imwrite(f"motions/current_frame.png", image)
-        
+
         prev_gray = hist
 
 #        print(f"Sleeping for {sleep_tm} seconds. Last distance: {d}")
