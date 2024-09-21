@@ -182,9 +182,9 @@ def home():
     i = 0
     for dir in directories:
         recent_events += f"<br/><a href='copilot?event_id={dir}'>{dir}</a>"
-        
+
 
     return home_template.render(recent_events = recent_events)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
