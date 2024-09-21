@@ -6,7 +6,6 @@ import requests
 import os
 import base64
 from io import BytesIO
-import torch
 from pathlib import Path
 import json
 
