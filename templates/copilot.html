@@ -28,7 +28,7 @@
                         document.getElementById("llm_response").innerHTML = JSON.stringify(data)
         
                         var combined_prompt = document.getElementById("system_prompt").value.trim();
-                        combined_prompt = combined_prompt + '\\n\\n'+JSON.stringify(data)+'\\n\\n';
+                        combined_prompt = combined_prompt + '\n\n'+JSON.stringify(data)+'\n\n';
                         console.log(combined_prompt);
         
                         document.getElementById("system_prompt")
