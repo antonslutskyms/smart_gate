@@ -78,7 +78,7 @@ def call_copilot():
     #response = {"response": "yes"}
 
 
-    events_root_dir = find_latest_event()[0]
+    events_root_dir = content["event_id"] #find_latest_event()[0]
 
     print(f"events_root_dir: {events_root_dir}")
 

@@ -13,7 +13,8 @@
                                         "Content-Type": "application/json"
                                     },
                                     body: JSON.stringify({
-                                        prompt: document.getElementById("system_prompt").value
+                                        prompt: document.getElementById("system_prompt").value,
+                                        event_id: "{{latest_event}}"
                                     })
                                 })
                     .then(response => {
@@ -66,6 +67,6 @@
         <center>
             <input type='button' id='call_copilot' value='Submit' style='height:50px;width:200px' onclick='call_copilot()'/>
         </center>
-        <audio id="say_it" src="motions/latest.wav"></audio>
+        <!--audio id="say_it" src="motions/latest.wav"></audio-->
     </body>
 </html>
