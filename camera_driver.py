@@ -4,10 +4,6 @@ from cv2 import VideoCapture, imwrite
 import os
 import datetime
 
-from PIL import Image
-from PIL import ImageFont
-from PIL import ImageDraw
-
 if __name__ == "__main__":
 
     sleep_tm = 0.5
@@ -35,7 +31,7 @@ if __name__ == "__main__":
 
         d = cv2.compareHist(hist, prev_gray, cv2.HISTCMP_CORREL) if prev_gray is not None else 0
 
-        if d < 0.995:
+        if d < 0.997:
 
             event_duration = (event_ts - last_event_ts).total_seconds() if last_event_ts else 0
 
@@ -54,14 +50,9 @@ if __name__ == "__main__":
 
             print(f"Motion recorded to: {motion_path}")
 
-        image = ImageDraw.Draw(image)
 
-        font = ImageFont.truetype("sans-serif.ttf", 26)
-
-        image.text((0, 0),f"D: {round(d, 5)}",(102,255,0),font=font)
-
+        
         imwrite(f"motions/current_frame.png", image)
-
         prev_gray = hist
 
 #        print(f"Sleeping for {sleep_tm} seconds. Last distance: {d}")
