@@ -81,6 +81,8 @@ def process_event(self, src_path):
 
             print(f"==== Response:\n{lm_response}\n====")
 
+            maybe_act_on_llm_response(llm_response)
+
             self.event_threads.remove(src_path)
             print(f"Releasing thread: {src_path}")
 
