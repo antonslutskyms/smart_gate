@@ -146,7 +146,7 @@ def find_latest_event():
 
 
 def dump_images(directory):
-    images = "<table width='100%'>"
+    images = "<table width='100%' border=1>"
 
     for filename in os.listdir(directory):
         
