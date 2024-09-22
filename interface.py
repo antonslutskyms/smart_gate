@@ -151,7 +151,7 @@ def dump_images(directory):
     for filename in os.listdir(directory):
         file_path = os.path.join(directory, filename)
 
-        info_path = file_path.replace("motions", "infos").replace("motion_", "info_").replace("event_", "info_")
+        info_path = file_path.replace("motions", "infos").replace("motion_", "info_").replace("event_", "info_").replace(".png", ".json")
 
         if os.path.isfile(file_path):
             info_data = open(info_path).read()
