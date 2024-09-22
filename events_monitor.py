@@ -43,7 +43,8 @@ def process_event(self, src_path):
     
     self.lock.acquire()
 
-    try:
+#    try:
+    if True:
         
         if src_path not in self.event_threads:
         
@@ -83,15 +84,14 @@ def process_event(self, src_path):
 
             maybe_act_on_llm_response(llm_response)
 
-            self.event_threads.remove(src_path)
-            print(f"Releasing thread: {src_path}")
-
         else:
             print("Race condition")
         
-    except:
-        print("ERROR: Event processing failed", sys.exc_info()[0])
-    finally:
+    # except:
+    #     print("ERROR: Event processing failed", sys.exc_info()[0])
+    # finally:
+        self.event_threads.remove(src_path)
+        print(f"Releasing thread: {src_path}")
         self.lock.release()
 
 
