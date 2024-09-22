@@ -37,7 +37,7 @@
         <script language='javascript'>
             function update_current_view(){
                 var url = 'motions/current_frame.png?t=' + new Date().getTime()
-                var img = Image();
+                var img = new Image();
                 img.src= url;
                 document.getElementById("current_frame").src = url
 
