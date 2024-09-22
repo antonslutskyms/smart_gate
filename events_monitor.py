@@ -25,9 +25,9 @@ def maybe_act_on_llm_response(llm_response):
         json_response = json.loads(llm_response)
 
         if json_response["allowed"] == "Yes":
-            play_sound
+            play_sound("yes.wav")
         elif json_response["allowed"] == "No":
-        
+            play_sound("no.wav")
         else:
             print("WARNING: JSON object not supported:", json_response)
         
