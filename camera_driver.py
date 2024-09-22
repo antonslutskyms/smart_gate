@@ -53,12 +53,24 @@ if __name__ == "__main__":
             
             supported_found = False
             
+            found_objects = []
+
             for object in vision_response.objects:
                 print(object.object_property, object.confidence)
+                found_objects.append({
+                    "object_property" : object.object_property,
+                    "confidence" : object.confidence
+                })
                 
                 if object.object_property in SUPPORTED_OBJECTS and not supported_found:
                     supported_found = True
                     print(f"Found supported object: {object.object_property}")
+
+            with open("motions/latest_info.json", "w") as latest_info_json:
+                latest_info_json.write(json.dumps({
+                    "distance" : d,
+                    "objects" : found_objects
+                }))
 
             if supported_found:
                 
@@ -81,6 +93,7 @@ if __name__ == "__main__":
             else:
                 print(f"Ignoring [{ts_now}]")
 
+            
         
         imwrite(f"motions/current_frame.png", image)
         prev_gray = hist
