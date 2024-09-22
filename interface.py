@@ -187,9 +187,10 @@ def last_event():
 
 @app.route('/')
 def home():
-    recent_events = ""
 
     directories = find_latest_event()
+
+    last_event = directories[0]
 
     i = 0
     for dir in directories:
@@ -198,7 +199,7 @@ def home():
     
 
 
-    return home_template.render(recent_events = recent_events)
+    return home_template.render(recent_events = recent_events, last_event=last_event)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
