@@ -124,6 +124,7 @@ def copilot():
 
     latest_event = event_id #find_latest_event()
 
+
     images = dump_images(latest_event)
 
     copilot_html = copilot_template.render(latest_event = latest_event, 
@@ -149,8 +150,13 @@ def dump_images(directory):
 
     for filename in os.listdir(directory):
         file_path = os.path.join(directory, filename)
+
+        info_path = file_path.replace("motions", "infos").relace("motion_", "info_")
+
         if os.path.isfile(file_path):
-            images += f"<img height='100px' src='{file_path}'/>"
+            info_data = open(info_path).read()
+
+            images += f"<div style='float:left'><img height='100px' src='{file_path}'/><br/>{info_data}</div>"
     
     return images
 
