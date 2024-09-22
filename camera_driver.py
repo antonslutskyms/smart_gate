@@ -63,7 +63,7 @@ if __name__ == "__main__":
                     "confidence" : object.confidence
                 })
                 
-                if object.object_property in SUPPORTED_OBJECTS and not supported_found:
+                if object.object_property in SUPPORTED_OBJECTS and not supported_found and object.confidence > 0.7:
                     supported_found = True
                     print(f"Found supported object: {object.object_property}")
 
