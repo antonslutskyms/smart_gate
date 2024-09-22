@@ -41,9 +41,9 @@ def maybe_act_on_llm_response(llm_response):
 
         if json_response["allowed"] == "Yes":
             play_sound("yes.wav")
-            gate_open()
         elif json_response["allowed"] == "No":
             play_sound("no.wav")
+            gate_open()
         else:
             print("WARNING: JSON object not supported:", json_response)
         
