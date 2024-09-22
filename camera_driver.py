@@ -67,12 +67,14 @@ if __name__ == "__main__":
                     supported_found = True
                     print(f"Found supported object: {object.object_property}")
 
-            with open("motions/latest_info.json", "w") as latest_info_json:
-                latest_info_json.write(json.dumps({
+            info_obj = {
                     "event_ts" : ts_now,
                     "distance" : d,
                     "objects" : found_objects
-                }))
+                }
+
+            with open("motions/latest_info.json", "w") as latest_info_json:
+                latest_info_json.write(json.dumps(info_obj))
 
             if supported_found:
                 
@@ -81,14 +83,23 @@ if __name__ == "__main__":
                 if motion_dir is None or event_duration > motion_timeout:
 
                     motion_dir = f"motions/motion_{ts_now}"
+                    info_dir = f"infos/info_{ts_now}"
+                    
                     print(f"Starting new event[{d}]: {motion_dir}. Time since last motion: {event_duration}")
 
                     os.makedirs(motion_dir)
+                    os.makedirs(info_dir)
 
                 last_event_ts = event_ts
 
                 motion_path = f"{motion_dir}/event_{ts_now}.png"
                 imwrite(motion_path, image)
+
+                info_path = f"{info_dir}/info_{ts_now}.json"
+                with open(info_path, "w") as info_json:
+                    info_json.write(json.dumps(info_obj))
+
+
                 imwrite(f"motions/event_current.png", image)
 
                 print(f"Motion recorded to: {motion_path}")
