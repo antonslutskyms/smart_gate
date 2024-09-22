@@ -146,18 +146,21 @@ def find_latest_event():
 
 
 def dump_images(directory):
-    images = ""
+    images = "<table width='100%'>"
 
     for filename in os.listdir(directory):
+        
         file_path = os.path.join(directory, filename)
 
         info_path = file_path.replace("motions", "infos").replace("motion_", "info_").replace("event_", "info_").replace(".png", ".json")
 
         if os.path.isfile(file_path):
+            images += "<tr>"
             info_data = open(info_path).read()
 
-            images += f"<div style='float:left'><img height='100px' src='{file_path}'/><br/>{info_data}</div>"
-    
+            images += f"<td>{filename}</td><td><img height='100px' src='{file_path}'/></td><td>{info_data}</td></div>"
+            images += "</tr>"
+    images += "</table>"
     return images
 
 @app.route('/last_event')
@@ -179,7 +182,6 @@ def last_event():
 
     return last_event_template.render(directory = directory, 
                                         images = images, 
-                                        file_names = dir_list,
                                         latest_info = latest_info)
 
 
