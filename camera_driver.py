@@ -4,6 +4,7 @@ from cv2 import VideoCapture, imwrite
 import os
 import datetime
 import io
+import json
 
 from azure.cognitiveservices.vision.computervision import ComputerVisionClient
 from msrest.authentication import CognitiveServicesCredentials
