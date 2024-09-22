@@ -75,9 +75,6 @@ def call_copilot():
     _system_prompt = content["prompt"]
     print("System Prompt: ", _system_prompt)
 
-    #response = {"response": "yes"}
-
-
     events_root_dir = content["event_id"] #find_latest_event()[0]
 
     print(f"events_root_dir: {events_root_dir}")
@@ -168,9 +165,16 @@ def last_event():
 
     dir_list = "<br/>".join(os.listdir(directory))
 
+    latest_info = ""
+    try:
+        latest_info = open("motions/latest_info.json").read()
+    except:
+        print("WARNING: Unable to load latest info")
+
     return last_event_template.render(directory = directory, 
                                         images = images, 
-                                        file_names = dir_list)
+                                        file_names = dir_list,
+                                        latest_info = latest_info)
 
 
 @app.route('/')
@@ -182,6 +186,8 @@ def home():
     i = 0
     for dir in directories:
         recent_events += f"<br/><a href='copilot?event_id={dir}'>{dir}</a>"
+
+    
 
 
     return home_template.render(recent_events = recent_events)
