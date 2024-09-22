@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
             with open("motions/latest_info.json", "w") as latest_info_json:
                 latest_info_json.write(json.dumps({
-                    "event_ts" : ts_now
+                    "event_ts" : ts_now,
                     "distance" : d,
                     "objects" : found_objects
                 }))
