@@ -76,11 +76,11 @@ def process_event(self, src_path):
 
             print(f"---- User Prompt:\n{prompt}\n----")
 
-            lm_response = rsg.llm_task(user_prompt = prompt, 
+            llm_response = rsg.llm_task(user_prompt = prompt, 
                     system_prompt=event_analysis_prompt, 
                     image_urls = image_urls)
 
-            print(f"==== Response:\n{lm_response}\n====")
+            print(f"==== Response:\n{llm_response}\n====")
 
             maybe_act_on_llm_response(llm_response)
 
