@@ -23,25 +23,26 @@ def process_event(self, src_path):
 
         events_root_dir = src_path
 
-        for filename in os.listdir(events_root_dir):
-            file_path = os.path.join(events_root_dir, filename)
-            if os.path.isfile(file_path):
-                data_actions.append({"type": "image", "path": filename})
+        if os.path.isdir(events_root_dir):
+            for filename in os.listdir(events_root_dir):
+                file_path = os.path.join(events_root_dir, filename)
+                if os.path.isfile(file_path):
+                    data_actions.append({"type": "image", "path": filename})
 
-        print("Data Actions: ", data_actions)
+            print("Data Actions: ", data_actions)
 
-        prompt, image_urls = rsg.render_prompt(data_actions, images_root_dir = events_root_dir)
+            prompt, image_urls = rsg.render_prompt(data_actions, images_root_dir = events_root_dir)
 
-        print(f"---- Prompt:\n{prompt}\n----")
+            print(f"---- Prompt:\n{prompt}\n----")
 
-        lm_response = rsg.llm_task(user_prompt = prompt, 
-                system_prompt="What do you see in the pictures?", 
-                image_urls = image_urls)
+            lm_response = rsg.llm_task(user_prompt = prompt, 
+                    system_prompt="What do you see in the pictures?", 
+                    image_urls = image_urls)
 
-        print(f"==== Response:{lm_response}\n====")
+            print(f"==== Response:\n{lm_response}\n====")
 
-        self.event_threads.remove(src_path)
-        print(f"Releasing thread: {src_path}")
+            self.event_threads.remove(src_path)
+            print(f"Releasing thread: {src_path}")
 
     else:
         print("Race condition")
