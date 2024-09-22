@@ -3,10 +3,37 @@ import time
 from watchdog.events import FileSystemEvent, FileSystemEventHandler
 from watchdog.observers import Observer
 import os
+import sys
 import threading
 import time
+import json
 
 import run_smart_gate as rsg
+
+env = Environment(loader = FileSystemLoader('templates'))
+event_analysis_prompt_template = env.get_template('event_analysis_prompt.jinja')
+
+def play_sound(file = "event_detected.wav"):
+    try:
+        os.system(f"aplay -D sysdefault:CARD=Headphones {file}")
+    except:
+        print("WARNING: Unable to play sound")
+
+def maybe_act_on_llm_response(llm_response):
+    try:
+        print("!!!!!!!!!!!!!! Processing response:", llm_response)
+        json_response = json.loads(llm_response)
+
+        if json_response["allowed"] == "Yes":
+            play_sound
+        elif json_response["allowed"] == "No":
+        
+        else:
+            print("WARNING: JSON object not supported:", json_response)
+        
+    except:
+        print(f"ERROR: LLM response not understood:\n---------------------------------------\n{llm_response}\n---------------------------------------", sys.exc_info()[0])
+
 
 
 def process_event(self, src_path):
@@ -16,10 +43,7 @@ def process_event(self, src_path):
         
         if src_path not in self.event_threads:
         
-            try:
-                os.system("aplay -D sysdefault:CARD=Headphones event_detected.wav")
-            except:
-                print("WARNING: Unable to play sound")
+            play_sound()
 
             self.event_threads.append(src_path)
 
@@ -41,10 +65,14 @@ def process_event(self, src_path):
 
             prompt, image_urls = rsg.render_prompt(data_actions, images_root_dir = events_root_dir)
 
-            print(f"---- Prompt:\n{prompt}\n----")
+            event_analysis_prompt = event_analysis_prompt_template.render()
+
+            print(f"---- System Prompt:\n{event_analysis_prompt}\n----")
+
+            print(f"---- User Prompt:\n{prompt}\n----")
 
             lm_response = rsg.llm_task(user_prompt = prompt, 
-                    system_prompt="What do you see in the pictures?", 
+                    system_prompt=event_analysis_prompt, 
                     image_urls = image_urls)
 
             print(f"==== Response:\n{lm_response}\n====")
