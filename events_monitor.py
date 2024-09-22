@@ -12,7 +12,12 @@ import run_smart_gate as rsg
 def process_event(self, src_path):
     self.lock.acquire()
     if src_path not in self.event_threads:
-
+    
+        try:
+            os.system("aplay -D sysdefault:CARD=Headphones event_detected.wav")
+        except:
+            print("WARNING: Unable to play sound")
+                
         self.event_threads.append(src_path)
 
         print(f"Processing event: {src_path} events: {self.event_threads}")
