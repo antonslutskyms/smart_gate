@@ -37,15 +37,15 @@
         <script language='javascript'>
             function update_current_view(){
                 var url = 'motions/current_frame.png?t=' + new Date().getTime()
-                var img = new Image();
-                img.src= url;
+                // var img = new Image();
+                // img.src= url;
 
-                current_frame_view = document.getElementById("current_frame_view")
-                while (current_frame_view.firstChild) {
-                    current_frame_view.removeChild(current_frame_view.lastChild);
-                }
-                current_frame_view.append(img)
-                //document.getElementById("current_frame").src = url
+                // current_frame_view = document.getElementById("current_frame_view")
+                // while (current_frame_view.firstChild) {
+                //     current_frame_view.removeChild(current_frame_view.lastChild);
+                // }
+                // current_frame_view.append(img)
+                document.getElementById("current_frame").src = url
 
             }
 
