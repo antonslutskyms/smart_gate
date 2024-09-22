@@ -193,6 +193,7 @@ def home():
     last_event = directories[0]
 
     i = 0
+    recent_events = ""
     for dir in directories:
         recent_events += f"<br/><a href='copilot?event_id={dir}'>{dir}</a>"
 
