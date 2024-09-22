@@ -10,6 +10,8 @@ import json
 
 import run_smart_gate as rsg
 
+from jinja2 import Environment, FileSystemLoader
+
 env = Environment(loader = FileSystemLoader('templates'))
 event_analysis_prompt_template = env.get_template('event_analysis_prompt.jinja')
 
