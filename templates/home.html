@@ -15,7 +15,7 @@
                 </th>
             </tr>
             <tr>
-                <td align='center' valign='center' >
+                <td align='center' valign='center' id="current_frame_view">
                     <img src='motions/current_frame.png' id='current_frame' style="border: red solid 5px"/>
                 </td>
                 <td align='center' valign='center' >    
@@ -35,7 +35,15 @@
         </table>
         
         <script language='javascript'>
-            setInterval(function () {document.getElementById("current_frame").src = 'motions/current_frame.png?t=' + new Date().getTime();}, 1000);
+            function update_current_view(){
+                var url = 'motions/current_frame.png?t=' + new Date().getTime()
+                var img = Image();
+                img.src= url;
+                document.getElementById("current_frame").src = url
+
+            }
+
+            setInterval(update_current_view, 1000);
             setInterval(function () {document.getElementById("event_current").src = 'motions/event_current.png?t=' + new Date().getTime();}, 1000);
             setInterval(function () {document.getElementById("last_events").contentWindow.location.reload()}, 5000);
         </script>
