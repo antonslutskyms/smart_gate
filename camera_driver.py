@@ -3,6 +3,15 @@ import cv2
 from cv2 import VideoCapture, imwrite
 import os
 import datetime
+import io
+
+from azure.cognitiveservices.vision.computervision import ComputerVisionClient
+from msrest.authentication import CognitiveServicesCredentials
+
+subscription_key = os.getenv("VISION_KEY")
+endpoint = os.getenv("VISION_ENDPOINT")
+
+computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
 if __name__ == "__main__":
 
@@ -17,6 +26,8 @@ if __name__ == "__main__":
     last_event_ts = None
 
     motion_timeout = 7
+
+    SUPPORTED_OBJECTS = ["mammal", "cat", "animal"]
 
     while run:
 
@@ -33,23 +44,42 @@ if __name__ == "__main__":
 
         if d < 0.997:
 
-            event_duration = (event_ts - last_event_ts).total_seconds() if last_event_ts else 0
+            is_success, buffer = cv2.imencode(".jpg", image)
+            io_buf = io.BytesIO(buffer)
+            
+            vision_response = computervision_client.detect_objects_in_stream(io_buf)
 
-            if motion_dir is None or event_duration > motion_timeout:
+            print(f"\nObjects analysis [{ts_now}]:")
+            
+            supported_found = False
+            
+            for object in vision_response.objects:
+                print(object.object_property, object.confidence)
+                
+                if object.object_property in SUPPORTED_OBJECTS and not supported_found:
+                    supported_found = True
+                    print(f"Found supported object: {object.object_property}")
 
-                motion_dir = f"motions/motion_{ts_now}"
-                print(f"Starting new event[{d}]: {motion_dir}. Time since last motion: {event_duration}")
+            if supported_found:
+                
+                event_duration = (event_ts - last_event_ts).total_seconds() if last_event_ts else 0
 
-                os.makedirs(motion_dir)
+                if motion_dir is None or event_duration > motion_timeout:
 
-            last_event_ts = event_ts
+                    motion_dir = f"motions/motion_{ts_now}"
+                    print(f"Starting new event[{d}]: {motion_dir}. Time since last motion: {event_duration}")
 
-            motion_path = f"{motion_dir}/event_{ts_now}.png"
-            imwrite(motion_path, image)
-            imwrite(f"motions/event_current.png", image)
+                    os.makedirs(motion_dir)
 
-            print(f"Motion recorded to: {motion_path}")
+                last_event_ts = event_ts
 
+                motion_path = f"{motion_dir}/event_{ts_now}.png"
+                imwrite(motion_path, image)
+                imwrite(f"motions/event_current.png", image)
+
+                print(f"Motion recorded to: {motion_path}")
+            else:
+                print(f"Ignoring [{ts_now}]")
 
         
         imwrite(f"motions/current_frame.png", image)
