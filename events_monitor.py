@@ -21,13 +21,27 @@ def play_sound(file = "event_detected.wav"):
     except:
         print("WARNING: Unable to play sound")
 
+def gate_open():
+    try:
+        os.system(f"python3.10 servo3.py 30")
+    except:
+        print("WARNING: Unable to open gate")
+
+def gate_close():
+    try:
+        os.system(f"python3.10 servo3.py 180")
+    except:
+        print("WARNING: Unable to close gate")
+
 def maybe_act_on_llm_response(llm_response):
     try:
-        print("!!!!!!!!!!!!!! Processing response:", llm_response)
+        print("Processing LLM response:", llm_response)
+
         json_response = json.loads(llm_response)
 
         if json_response["allowed"] == "Yes":
             play_sound("yes.wav")
+            gate_open()
         elif json_response["allowed"] == "No":
             play_sound("no.wav")
         else:
@@ -49,6 +63,7 @@ def process_event(self, src_path):
         if src_path not in self.event_threads:
         
             play_sound()
+            gate_close()
 
             self.event_threads.append(src_path)
 
