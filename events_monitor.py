@@ -23,26 +23,26 @@ def process_event(self, src_path):
 
         events_root_dir = src_path
 
-        if os.path.isdir(events_root_dir):
-            for filename in os.listdir(events_root_dir):
-                file_path = os.path.join(events_root_dir, filename)
-                if os.path.isfile(file_path):
-                    data_actions.append({"type": "image", "path": filename})
 
-            print("Data Actions: ", data_actions)
+        for filename in os.listdir(events_root_dir):
+            file_path = os.path.join(events_root_dir, filename)
+            if os.path.isfile(file_path):
+                data_actions.append({"type": "image", "path": filename})
 
-            prompt, image_urls = rsg.render_prompt(data_actions, images_root_dir = events_root_dir)
+        print("Data Actions: ", data_actions)
 
-            print(f"---- Prompt:\n{prompt}\n----")
+        prompt, image_urls = rsg.render_prompt(data_actions, images_root_dir = events_root_dir)
 
-            lm_response = rsg.llm_task(user_prompt = prompt, 
-                    system_prompt="What do you see in the pictures?", 
-                    image_urls = image_urls)
+        print(f"---- Prompt:\n{prompt}\n----")
 
-            print(f"==== Response:\n{lm_response}\n====")
+        lm_response = rsg.llm_task(user_prompt = prompt, 
+                system_prompt="What do you see in the pictures?", 
+                image_urls = image_urls)
 
-            self.event_threads.remove(src_path)
-            print(f"Releasing thread: {src_path}")
+        print(f"==== Response:\n{lm_response}\n====")
+
+        self.event_threads.remove(src_path)
+        print(f"Releasing thread: {src_path}")
 
     else:
         print("Race condition")
@@ -58,8 +58,8 @@ class EventHandler(FileSystemEventHandler):
 
     def on_any_event(self, event: FileSystemEvent) -> None:
 
-        if "motion_" in event.src_path:                
-            if len(self.event_threads) == 0:
+        if os.path.isdir(event.src_path) and "motion_" in event.src_path and len(self.event_threads) == 0:                
+            
                 print(f"Detected event: {event.src_path} ..............")
                 event_thread = threading.Thread(target = process_event, args = (self, event.src_path,))
                 event_thread.start()
