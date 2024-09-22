@@ -158,7 +158,7 @@ def dump_images(directory):
             images += "<tr>"
             info_data = open(info_path).read()
 
-            images += f"<td width='10%'>{filename}</td><td><img height='100px' src='{file_path}' style='border: green solid 3px'/></td><td>{info_data}</td></div>"
+            images += f"<td width='20%'>{filename}</td><td><img height='100px' src='{file_path}' style='border: green solid 3px'/></td><td>{info_data}</td></div>"
             images += "</tr>"
     images += "</table>"
     return images
