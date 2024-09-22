@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
     motion_timeout = 7
 
-    SUPPORTED_OBJECTS = ["mammal", "cat", "animal"]
+    SUPPORTED_OBJECTS = ["mammal", "cat", "animal", "person"]
 
     while run:
 
