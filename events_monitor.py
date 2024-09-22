@@ -39,56 +39,58 @@ def maybe_act_on_llm_response(llm_response):
 
 
 def process_event(self, src_path):
-    self.lock.acquire()
+    print(src_path)
+    
+    # self.lock.acquire()
 
-    try:
+    # try:
         
-        if src_path not in self.event_threads:
+    #     if src_path not in self.event_threads:
         
-            play_sound()
+    #         play_sound()
 
-            self.event_threads.append(src_path)
+    #         self.event_threads.append(src_path)
 
-            print(f"Processing event: {src_path} events: {self.event_threads}")
-            time.sleep(5)
-            print("Checking dir:", src_path)
+    #         print(f"Processing event: {src_path} events: {self.event_threads}")
+    #         time.sleep(5)
+    #         print("Checking dir:", src_path)
             
-            data_actions = []
+    #         data_actions = []
 
-            events_root_dir = src_path
+    #         events_root_dir = src_path
 
 
-            for filename in os.listdir(events_root_dir):
-                file_path = os.path.join(events_root_dir, filename)
-                if os.path.isfile(file_path):
-                    data_actions.append({"type": "image", "path": filename})
+    #         for filename in os.listdir(events_root_dir):
+    #             file_path = os.path.join(events_root_dir, filename)
+    #             if os.path.isfile(file_path):
+    #                 data_actions.append({"type": "image", "path": filename})
 
-            print("Data Actions: ", data_actions)
+    #         print("Data Actions: ", data_actions)
 
-            prompt, image_urls = rsg.render_prompt(data_actions, images_root_dir = events_root_dir)
+    #         prompt, image_urls = rsg.render_prompt(data_actions, images_root_dir = events_root_dir)
 
-            event_analysis_prompt = event_analysis_prompt_template.render()
+    #         event_analysis_prompt = event_analysis_prompt_template.render()
 
-            print(f"---- System Prompt:\n{event_analysis_prompt}\n----")
+    #         print(f"---- System Prompt:\n{event_analysis_prompt}\n----")
 
-            print(f"---- User Prompt:\n{prompt}\n----")
+    #         print(f"---- User Prompt:\n{prompt}\n----")
 
-            lm_response = rsg.llm_task(user_prompt = prompt, 
-                    system_prompt=event_analysis_prompt, 
-                    image_urls = image_urls)
+    #         lm_response = rsg.llm_task(user_prompt = prompt, 
+    #                 system_prompt=event_analysis_prompt, 
+    #                 image_urls = image_urls)
 
-            print(f"==== Response:\n{lm_response}\n====")
+    #         print(f"==== Response:\n{lm_response}\n====")
 
-            self.event_threads.remove(src_path)
-            print(f"Releasing thread: {src_path}")
+    #         self.event_threads.remove(src_path)
+    #         print(f"Releasing thread: {src_path}")
 
-        else:
-            print("Race condition")
+    #     else:
+    #         print("Race condition")
         
-    except:
-        print("ERROR: Event processing failed", sys.exc_info()[0])
-    finally:
-        self.lock.release()
+    # except:
+    #     print("ERROR: Event processing failed", sys.exc_info()[0])
+    # finally:
+    #     self.lock.release()
 
 
 
