@@ -148,7 +148,7 @@ def process_event(self, src_path):
                 open(info_path, "w").write(json.dumps(data_actions))
 
                 print("\n\n----------------- Sleeping for time to skip subsequent events ------------\n\n")
-                time.sleep(25)
+                time.sleep(60)
                 print("Getting more events")
             else:
                 print("Not enough clear images")
