@@ -52,11 +52,11 @@ def maybe_act_on_llm_response(llm_response):
 
         if json_response["has_object"] == "Yes":
             #play_sound("yes.wav")
-            say_it("Rodents detected.  Cat will not be allowed.")
+            say_it("Rodents detected.")
         elif json_response["has_object"] == "No":
             #play_sound("no.wav")
             gate_open()
-            say_it("Rodents not detected.  Cat is allowed.")
+            say_it("Rodents not detected.")
             
         else:
             print("WARNING: JSON object not supported:", json_response)
@@ -117,28 +117,25 @@ def process_event(self, src_path):
             events_root_dir = src_path
 
             images_filter = None
-#            try:
-            analysis_prompt = filter_images_template.render()
-            llm_response = llm_analyze_event_images(analysis_prompt, events_root_dir)
-            print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
+            try:
+                analysis_prompt = filter_images_template.render()
+                llm_response = llm_analyze_event_images(analysis_prompt, events_root_dir)
+                print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
 
-            images_filter = json.loads(llm_response)
+                images_filter = json.loads(llm_response)
 
-            best_pic_str = " ".join([str(i) for i in images_filter])
+                best_pic_str = " ".join([str(i) for i in images_filter])
 
-            say_it(f"Best pics are {best_pic_str} images.")
+                say_it(f"Best pics are {best_pic_str} images.")
 
-            print(f"[IMAGE FILTER] filter: {images_filter}")
-            # except:
-            #     print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
+                print(f"[IMAGE FILTER] filter: {images_filter}")
+            except:
+                print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
+                say_it("Warning! Error filtering images.")
 
             if images_filter:
                 
-
-                
                 data_actions = []
-
-                
 
                 i = 0
                 for filename in os.listdir(events_root_dir):
@@ -185,7 +182,11 @@ def process_event(self, src_path):
                 gate_open_timeout = 60
                 
                 say_it(f"Gate will be open for {gate_open_timeout} seconds.")
-                time.sleep(gate_open_timeout)
+                
+                step = 5
+                for i in range(gate_open_timeout, step): 
+                    time.sleep(step)
+                    say_it(f"{gate_open_timeout - i}")
                 
                 say_it("Gate may close now.")
                 print("Getting more events")
