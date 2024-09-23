@@ -142,7 +142,7 @@ def copilot():
 
     filtered_images = [d["path"] for d in data_info["filtered_data_actions"]]
 
-    images = dump_images(latest_event, image_filter)
+    images = dump_images(latest_event, image_filter, filtered_images)
 
     copilot_html = copilot_template.render(latest_event = latest_event, 
                                             system_prompt=system_prompt,
