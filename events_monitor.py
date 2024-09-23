@@ -26,7 +26,7 @@ def say_it(text):
 
 def play_sound(file = "event_detected.wav"):
     try:
-        os.system(f"aplay -D sysdefault:CARD=Headphones {file} ")
+        os.system(f"aplay -D sysdefault:CARD=Headphones {file} 2> /dev/null")
     except:
         print("WARNING: Unable to play sound")
 
@@ -51,10 +51,13 @@ def maybe_act_on_llm_response(llm_response):
         json_response = json.loads(llm_response)
 
         if json_response["has_object"] == "Yes":
-            play_sound("yes.wav")
+            #play_sound("yes.wav")
+            say_it("Rodents detected.  Cat will not be allowed.")
         elif json_response["has_object"] == "No":
-            play_sound("no.wav")
+            #play_sound("no.wav")
             gate_open()
+            say_it("Rodents detected.  Cat is allowed.")
+            
         else:
             print("WARNING: JSON object not supported:", json_response)
         
@@ -165,7 +168,7 @@ def process_event(self, src_path):
                         system_prompt="How many images do you see?  Describe each image.", 
                         image_urls = image_urls)
 
-                say_it(llm_response_descr)
+                #say_it(llm_response_descr)
 
                 maybe_act_on_llm_response(llm_response)
 
@@ -173,7 +176,8 @@ def process_event(self, src_path):
                 info_path = src_path.replace("motions", "infos").replace("motion_", "info_")
                 info_path = info_path +"/data_actions.json"
 
-                open(info_path, "w").write(json.dumps(data_actions))
+                open(info_path, "w").write(json.dumps({"data_actions" : data_actions,
+                                                        "images_description" : llm_response_descr}))
 
                 print("\n\n----------------- Sleeping for time to skip subsequent events ------------\n\n")
                 
