@@ -56,7 +56,7 @@ def maybe_act_on_llm_response(llm_response):
 def llm_analyze_event_images(system_prompt, events_root_dir):
 
     data_actions = []
-    
+
     for filename in os.listdir(events_root_dir):
         file_path = os.path.join(events_root_dir, filename)
         if os.path.isfile(file_path):
@@ -97,16 +97,16 @@ def process_event(self, src_path):
             events_root_dir = src_path
 
             images_filter = None
-            #try:
-            analysis_prompt = filter_images_template.render()
-            llm_response = llm_analyze_event_images(analysis_prompt, events_root_dir)
-            print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
+            try:
+                analysis_prompt = filter_images_template.render()
+                llm_response = llm_analyze_event_images(analysis_prompt, events_root_dir)
+                print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
 
-            images_filter = json.loads(llm_response)
+                images_filter = json.loads(llm_response)
 
-            print(f"[IMAGE FILTER] filter: {images_filter}")
-            # except:
-            #     print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
+                print(f"[IMAGE FILTER] filter: {images_filter}")
+            except:
+                print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
 
 
             data_actions = []
