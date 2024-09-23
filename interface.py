@@ -129,7 +129,7 @@ def copilot():
 
     images = dump_images(latest_event)
 
-    image_filter = [i for in range(len(images))]
+    image_filter = [i for i in range(len(images))]
 
     try:
         image_filter = json.load(request.args.get('image_filter')) 
