@@ -182,7 +182,7 @@ def process_event(self, src_path):
                 
                 gate_open_timeout = 60
                 
-                is_open = "open" if is_gate_open else "closed"
+                open_or_closed = "open" if is_gate_open else "closed"
 
                 if not is_gate_open:
                     gate_open_timeout = 300
