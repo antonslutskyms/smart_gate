@@ -55,6 +55,8 @@ def maybe_act_on_llm_response(llm_response):
 
 def llm_analyze_event_images(system_prompt, events_root_dir):
 
+    data_actions = []
+    
     for filename in os.listdir(events_root_dir):
         file_path = os.path.join(events_root_dir, filename)
         if os.path.isfile(file_path):
