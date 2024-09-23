@@ -26,14 +26,14 @@ def say_it(text):
 
 def play_sound(file = "event_detected.wav"):
     try:
-        os.system(f"aplay -D sysdefault:CARD=Headphones {file}")
+        os.system(f"aplay -D sysdefault:CARD=Headphones {file} 2> /dev/null")
     except:
         print("WARNING: Unable to play sound")
 
 def gate_open():
     try:
         print("ATTENTION: GATE OPENING")
-        os.system(f"python3.10 servo3.py 30")
+        os.system(f"python3.10 servo3.py 0")
     except:
         print("WARNING: Unable to open gate")
 
