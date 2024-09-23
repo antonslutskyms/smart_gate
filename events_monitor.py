@@ -138,12 +138,16 @@ def process_event(self, src_path):
                 
                 data_actions = []
 
+                all_data_actions = []
+
                 i = 0
                 for filename in os.listdir(events_root_dir):
                     file_path = os.path.join(events_root_dir, filename)
                     if os.path.isfile(file_path):
+                        data_action = {"type": "image", "path": filename}
                         if not images_filter or i in images_filter:
-                            data_actions.append({"type": "image", "path": filename})
+                            data_actions.append(data_action)
+                        all_data_actions.append(data_action)
                         i += 1 
 
                 print("Data Actions: ", data_actions)
@@ -174,7 +178,8 @@ def process_event(self, src_path):
                 info_path = src_path.replace("motions", "infos").replace("motion_", "info_")
                 info_path = info_path +"/data_actions.json"
 
-                open(info_path, "w").write(json.dumps({"data_actions" : data_actions,
+                open(info_path, "w").write(json.dumps({ "unfiltered_data_actions" : all_data_actions, 
+                                                        "filtered_data_actions" : data_actions,
                                                         "images_description" : llm_response_descr,
                                                         }))
 
