@@ -20,13 +20,13 @@ event_analysis_prompt_template = env.get_template('event_analysis_prompt.jinja')
 
 def say_it(text):
     try:
-        os.system(f"espeak '{text}'")
+        os.system(f"espeak '{text}' 2> /dev/null")
     except:
         print("WARNING: Unable to play sound")
 
 def play_sound(file = "event_detected.wav"):
     try:
-        os.system(f"aplay -D sysdefault:CARD=Headphones {file} 2> /dev/null")
+        os.system(f"aplay -D sysdefault:CARD=Headphones {file} ")
     except:
         print("WARNING: Unable to play sound")
 
