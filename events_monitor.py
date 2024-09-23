@@ -95,15 +95,15 @@ def process_event(self, src_path):
             print("Checking dir:", src_path)
 
             images_filter = None
-            try:
-                llm_response = llm_analyze_event_images(system_prompt, events_root_dir, filter_images_template)
-                print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
+            #try:
+            llm_response = llm_analyze_event_images(system_prompt, events_root_dir, filter_images_template)
+            print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
 
-                images_filter = json.loads(llm_response)
+            images_filter = json.loads(llm_response)
 
-                print(f"[IMAGE FILTER] filter: {images_filter}")
-            except:
-                print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
+            print(f"[IMAGE FILTER] filter: {images_filter}")
+            # except:
+            #     print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
 
             data_actions = []
 
