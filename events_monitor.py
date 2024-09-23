@@ -113,7 +113,7 @@ def process_event(self, src_path):
 
             
 
-            i = 1
+            i = 0
             for filename in os.listdir(events_root_dir):
                 file_path = os.path.join(events_root_dir, filename)
                 if os.path.isfile(file_path):
