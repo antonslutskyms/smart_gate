@@ -92,6 +92,8 @@ def process_event(self, src_path):
             time.sleep(5)
             print("Checking dir:", src_path)
 
+            events_root_dir = src_path
+
             images_filter = None
             #try:
             analysis_prompt = filter_images_template.render()
@@ -107,7 +109,7 @@ def process_event(self, src_path):
 
             data_actions = []
 
-            events_root_dir = src_path
+            
 
             i = 1
             for filename in os.listdir(events_root_dir):
