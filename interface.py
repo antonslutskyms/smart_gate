@@ -185,7 +185,7 @@ def last_event():
     
     print("Latest event dir:", directory)
     
-    images = dump_images(directory)
+    images = dump_images(directory, None)
 
     dir_list = "<br/>".join(os.listdir(directory))
 
