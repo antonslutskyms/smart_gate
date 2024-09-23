@@ -168,7 +168,7 @@ def process_event(self, src_path):
 
                 #say_it(llm_response_descr)
 
-                is_gate_open maybe_act_on_llm_response(llm_response)
+                is_gate_open = maybe_act_on_llm_response(llm_response)
 
                 # Persisting llm results:
                 info_path = src_path.replace("motions", "infos").replace("motion_", "info_")
