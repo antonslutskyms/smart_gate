@@ -140,7 +140,7 @@ def copilot():
 
     data_info = json.loads(open(info_path).read())
 
-    filtered_images = data_info["filtered_data_actions"]
+    filtered_images = [d["path"] for d in data_info["filtered_data_actions"]]
 
     images = dump_images(latest_event, image_filter)
 
