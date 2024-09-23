@@ -126,15 +126,14 @@ def copilot():
 
     latest_event = event_id #find_latest_event()
 
-
-    images = dump_images(latest_event)
-
-    image_filter = [i for i in range(len(images))]
+    image_filter = None
 
     try:
         image_filter = json.load(request.args.get('image_filter')) 
     except:
         print("Image filter not found")
+
+    images = dump_images(latest_event, image_filter)
 
     images = [images[i] for i in image_filter]
 
@@ -156,21 +155,26 @@ def find_latest_event():
     return sorted(dirs, key=lambda x: os.path.getctime(x), reverse=True)
 
 
-def dump_images(directory):
+def dump_images(directory, image_filter):
     images = "<table width='100%' border=1>"
 
+    i = 1
     for filename in os.listdir(directory):
         
-        file_path = os.path.join(directory, filename)
+        if not image_filter or i in image_filter:
 
-        info_path = file_path.replace("motions", "infos").replace("motion_", "info_").replace("event_", "info_").replace(".png", ".json")
+            file_path = os.path.join(directory, filename)
 
-        if os.path.isfile(file_path):
-            images += "<tr>"
-            info_data = open(info_path).read()
+            info_path = file_path.replace("motions", "infos").replace("motion_", "info_").replace("event_", "info_").replace(".png", ".json")
 
-            images += f"<td width='15%'>{filename}</td><td><img height='100px' src='{file_path}' style='border: green solid 3px'/></td><td>{info_data}</td></div>"
-            images += "</tr>"
+            if os.path.isfile(file_path):
+                images += "<tr>"
+                info_data = open(info_path).read()
+
+                images += f"<td width='15%'>{filename}</td><td><img height='100px' src='{file_path}' style='border: green solid 3px'/></td><td>{info_data}</td></div>"
+                images += "</tr>"
+        i += 1
+        
     images += "</table>"
     return images
 
