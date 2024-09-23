@@ -129,7 +129,7 @@ class EventHandler(FileSystemEventHandler):
                 print(f"Detected event: {event.src_path} ..............")
                 event_thread = threading.Thread(target = process_event, args = (self, event.src_path,))
                 event_thread.start()
-            else:
+            elif event.src_path != "./motions":
                 print(f"Event dropped: {event.src_path} ..............")
 
         
