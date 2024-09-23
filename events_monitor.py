@@ -98,7 +98,9 @@ def process_event(self, src_path):
             print(f"==== Response:\n{llm_response}\n====")
 
             maybe_act_on_llm_response(llm_response)
-
+            print("Sleeping for time to skip subsequent events")
+            time.sleep(25)
+            print("Getting more events")
         else:
             print("Race condition")
         
@@ -126,8 +128,8 @@ class EventHandler(FileSystemEventHandler):
                 print(f"Detected event: {event.src_path} ..............")
                 event_thread = threading.Thread(target = process_event, args = (self, event.src_path,))
                 event_thread.start()
-            # else:
-            #     print(f"Event dropped: {event.src_path} ..............")
+            else:
+                print(f"Event dropped: {event.src_path} ..............")
 
         
 
