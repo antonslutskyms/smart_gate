@@ -52,11 +52,11 @@ def maybe_act_on_llm_response(llm_response):
 
         if json_response["has_object"] == "Yes":
             #play_sound("yes.wav")
-            say_it("Rodents detected.")
+            return False
         elif json_response["has_object"] == "No":
             #play_sound("no.wav")
             gate_open()
-            say_it("Rodents not detected.")
+            return True
             
         else:
             print("WARNING: JSON object not supported:", json_response)
@@ -64,6 +64,7 @@ def maybe_act_on_llm_response(llm_response):
     except:
         print(f"ERROR: LLM response not understood:\n---------------------------------------\n{llm_response}\n---------------------------------------", sys.exc_info()[0])
 
+    return False
 
 def llm_analyze_event_images(system_prompt, events_root_dir):
 
@@ -167,7 +168,7 @@ def process_event(self, src_path):
 
                 #say_it(llm_response_descr)
 
-                maybe_act_on_llm_response(llm_response)
+                is_gate_open maybe_act_on_llm_response(llm_response)
 
                 # Persisting llm results:
                 info_path = src_path.replace("motions", "infos").replace("motion_", "info_")
@@ -181,7 +182,12 @@ def process_event(self, src_path):
                 
                 gate_open_timeout = 60
                 
-                say_it(f"Gate will be open for {gate_open_timeout} seconds.")
+                is_open = "open" if is_gate_open else "closed"
+
+                if not is_gate_open:
+                    gate_open_timeout = 300
+
+                say_it(f"Gate will be {open_or_closed} for {gate_open_timeout} seconds.")
                 
                 step = 10
 
