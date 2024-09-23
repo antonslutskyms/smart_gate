@@ -108,39 +108,43 @@ def process_event(self, src_path):
             except:
                 print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
 
+            if image_filter:
+                data_actions = []
 
-            data_actions = []
+                
 
-            
+                i = 0
+                for filename in os.listdir(events_root_dir):
+                    file_path = os.path.join(events_root_dir, filename)
+                    if os.path.isfile(file_path):
+                        if not images_filter or i in images_filter:
+                            data_actions.append({"type": "image", "path": filename})
+                        i += 1 
 
-            i = 0
-            for filename in os.listdir(events_root_dir):
-                file_path = os.path.join(events_root_dir, filename)
-                if os.path.isfile(file_path):
-                    if not images_filter or i in images_filter:
-                        data_actions.append({"type": "image", "path": filename})
-                    i += 1 
+                print("Data Actions: ", data_actions)
 
-            print("Data Actions: ", data_actions)
+                prompt, image_urls = rsg.render_prompt(data_actions, images_root_dir = events_root_dir)
 
-            prompt, image_urls = rsg.render_prompt(data_actions, images_root_dir = events_root_dir)
+                event_analysis_prompt = event_analysis_prompt_template.render()
 
-            event_analysis_prompt = event_analysis_prompt_template.render()
+                print(f"---- System Prompt:\n{event_analysis_prompt}\n----")
 
-            print(f"---- System Prompt:\n{event_analysis_prompt}\n----")
+                print(f"---- User Prompt:\n{prompt}\n----")
 
-            print(f"---- User Prompt:\n{prompt}\n----")
+                llm_response = rsg.llm_task(user_prompt = prompt, 
+                        system_prompt=event_analysis_prompt, 
+                        image_urls = image_urls)
 
-            llm_response = rsg.llm_task(user_prompt = prompt, 
-                    system_prompt=event_analysis_prompt, 
-                    image_urls = image_urls)
 
-            print(f"==== Response:\n{llm_response}\n====")
 
-            maybe_act_on_llm_response(llm_response)
-            print("\n\n----------------- Sleeping for time to skip subsequent events ------------\n\n")
-            time.sleep(25)
-            print("Getting more events")
+                print(f"==== Response:\n{llm_response}\n====")
+
+                maybe_act_on_llm_response(llm_response)
+                print("\n\n----------------- Sleeping for time to skip subsequent events ------------\n\n")
+                time.sleep(25)
+                print("Getting more events")
+            else:
+                print("Not enough clear images")
         else:
             print("Race condition")
         
