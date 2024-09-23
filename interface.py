@@ -135,11 +135,17 @@ def copilot():
     except:
         print("Image filter not found")
 
+    info_path = latest_event.replace("motions", "infos").replace("motion_", "info_")
+    info_path = info_path + "/data_actions.json"
+
+    data_info = json.loads(open(info_path).read())
+
     images = dump_images(latest_event, image_filter)
 
     copilot_html = copilot_template.render(latest_event = latest_event, 
                                             system_prompt=system_prompt,
-                                            images = images)
+                                            images = images,
+                                            data_info = data_info)
 
     return copilot_html
 
