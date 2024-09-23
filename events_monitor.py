@@ -124,7 +124,7 @@ def process_event(self, src_path):
 
             images_filter = json.loads(llm_response)
 
-            best_pic_str = " ".join(images_filter)
+            best_pic_str = " ".join([str(i) for i in images_filter])
 
             say_it(f"Best pics are {best_pic_str} images.")
 
