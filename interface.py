@@ -136,7 +136,7 @@ def copilot():
     except:
         print("Image filter not found")
 
-    images = images[image_filter]
+    images = [images[i] for i in image_filter]
 
     copilot_html = copilot_template.render(latest_event = latest_event, 
                                             system_prompt=system_prompt,
