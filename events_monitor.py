@@ -13,6 +13,8 @@ import run_smart_gate as rsg
 from jinja2 import Environment, FileSystemLoader
 
 env = Environment(loader = FileSystemLoader('templates'))
+
+filter_images_template = env.get_template('filter_images_template.jinja')
 event_analysis_prompt_template = env.get_template('event_analysis_prompt.jinja')
 
 def play_sound(file = "event_detected.wav"):
@@ -51,6 +53,27 @@ def maybe_act_on_llm_response(llm_response):
         print(f"ERROR: LLM response not understood:\n---------------------------------------\n{llm_response}\n---------------------------------------", sys.exc_info()[0])
 
 
+def llm_analyze_event_images(system_prompt, events_root_dir, user_prompt_template):
+
+    for filename in os.listdir(events_root_dir):
+        file_path = os.path.join(events_root_dir, filename)
+        if os.path.isfile(file_path):
+            data_actions.append({"type": "image", "path": filename})
+
+    print("Data Actions: ", data_actions)
+
+    prompt, image_urls = rsg.render_prompt(data_actions, images_root_dir = events_root_dir)
+
+    analysis_prompt = user_prompt_template.render()
+
+    print(f"---- System Prompt:\n{analysis_prompt}\n----")
+
+    print(f"---- User Prompt:\n{prompt}\n----")
+
+    return rsg.llm_task(user_prompt = prompt, 
+            system_prompt=system_prompt, 
+            image_urls = image_urls)
+
 
 def process_event(self, src_path):
     #print(src_path)
@@ -70,17 +93,30 @@ def process_event(self, src_path):
             print(f"Processing event: {src_path} events: {self.event_threads}")
             time.sleep(5)
             print("Checking dir:", src_path)
-            
+
+            images_filter = None
+            try:
+                llm_response = llm_analyze_event_images(system_prompt, events_root_dir, user_prompt_template)
+                print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
+
+                images_filter = json.loads(llm_response)
+
+                print(f"[IMAGE FILTER] filter: {images_filter}")
+            except:
+                print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
+
             data_actions = []
 
             events_root_dir = src_path
 
-
+            i = 1
             for filename in os.listdir(events_root_dir):
                 file_path = os.path.join(events_root_dir, filename)
                 if os.path.isfile(file_path):
-                    data_actions.append({"type": "image", "path": filename})
-
+                    if not images_filter or i in images_filter:
+                        data_actions.append({"type": "image", "path": filename})
+                    i += 1 
+                    
             print("Data Actions: ", data_actions)
 
             prompt, image_urls = rsg.render_prompt(data_actions, images_root_dir = events_root_dir)
