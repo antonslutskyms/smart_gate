@@ -53,7 +53,7 @@ def maybe_act_on_llm_response(llm_response):
         print(f"ERROR: LLM response not understood:\n---------------------------------------\n{llm_response}\n---------------------------------------", sys.exc_info()[0])
 
 
-def llm_analyze_event_images(system_prompt, events_root_dir, user_prompt_template):
+def llm_analyze_event_images(system_prompt, events_root_dir):
 
     for filename in os.listdir(events_root_dir):
         file_path = os.path.join(events_root_dir, filename)
@@ -63,8 +63,6 @@ def llm_analyze_event_images(system_prompt, events_root_dir, user_prompt_templat
     print("Data Actions: ", data_actions)
 
     prompt, image_urls = rsg.render_prompt(data_actions, images_root_dir = events_root_dir)
-
-    analysis_prompt = user_prompt_template.render()
 
     print(f"---- System Prompt:\n{analysis_prompt}\n----")
 
@@ -96,7 +94,8 @@ def process_event(self, src_path):
 
             images_filter = None
             #try:
-            llm_response = llm_analyze_event_images(system_prompt, events_root_dir, filter_images_template)
+            analysis_prompt = user_prompt_template.render()
+            llm_response = llm_analyze_event_images(analysis_prompt, events_root_dir)
             print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
 
             images_filter = json.loads(llm_response)
