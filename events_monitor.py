@@ -17,6 +17,13 @@ env = Environment(loader = FileSystemLoader('templates'))
 filter_images_template = env.get_template('filter_images_template.jinja')
 event_analysis_prompt_template = env.get_template('event_analysis_prompt.jinja')
 
+
+def say_it(text):
+    try:
+        os.system(f"espeak '{text}'")
+    except:
+        print("WARNING: Unable to play sound")
+
 def play_sound(file = "event_detected.wav"):
     try:
         os.system(f"aplay -D sysdefault:CARD=Headphones {file}")
@@ -59,7 +66,11 @@ def llm_analyze_event_images(system_prompt, events_root_dir):
 
     data_actions = []
 
-    for filename in os.listdir(events_root_dir):
+    dir_list = os.listdir(events_root_dir)
+
+    say_it(f"Analyzing {len(dir_list)} images.")            
+
+    for filename in dir_list:
         file_path = os.path.join(events_root_dir, filename)
         if os.path.isfile(file_path):
             data_actions.append({"type": "image", "path": filename})
@@ -87,13 +98,17 @@ def process_event(self, src_path):
         
         if src_path not in self.event_threads:
         
-            play_sound()
+            say_it("Event detected.")
+            #play_sound()
             gate_close()
 
             self.event_threads.append(src_path)
 
+            say_it("Waiting for event to populate.")
             print(f"Processing event: {src_path} events: {self.event_threads}")
             time.sleep(5)
+
+
             print("Checking dir:", src_path)
 
             events_root_dir = src_path
@@ -106,11 +121,18 @@ def process_event(self, src_path):
 
                 images_filter = json.loads(llm_response)
 
+                best_pic_str = " ".join(images_filter)
+
+                say_it(f"Best pics are {best_pic_str} images.")
+
                 print(f"[IMAGE FILTER] filter: {images_filter}")
             except:
                 print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
 
             if images_filter:
+                
+
+                
                 data_actions = []
 
                 
@@ -137,9 +159,13 @@ def process_event(self, src_path):
                         system_prompt=event_analysis_prompt, 
                         image_urls = image_urls)
 
-
-
                 print(f"==== Response:\n{llm_response}\n====")
+
+                llm_response_descr = rsg.llm_task(user_prompt = prompt, 
+                        system_prompt="How many images do you see?  Describe each image.", 
+                        image_urls = image_urls)
+
+                say_it(llm_response_descr)
 
                 maybe_act_on_llm_response(llm_response)
 
@@ -150,9 +176,16 @@ def process_event(self, src_path):
                 open(info_path, "w").write(json.dumps(data_actions))
 
                 print("\n\n----------------- Sleeping for time to skip subsequent events ------------\n\n")
-                time.sleep(60)
+                
+                gate_open_timeout = 60
+                
+                say_it(f"Gate will be open for {gate_open_timeout} seconds.")
+                time.sleep(gate_open_timeout)
+                
+                say_it("Gate may close now.")
                 print("Getting more events")
             else:
+                say_it("Not enough clear images.")
                 print("Not enough clear images")
         else:
             print("Race condition")
