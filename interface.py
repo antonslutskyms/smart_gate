@@ -135,8 +135,6 @@ def copilot():
 
     images = dump_images(latest_event, image_filter)
 
-    images = [images[i] for i in image_filter]
-
     copilot_html = copilot_template.render(latest_event = latest_event, 
                                             system_prompt=system_prompt,
                                             images = images)
@@ -174,7 +172,7 @@ def dump_images(directory, image_filter):
                 images += f"<td width='15%'>{filename}</td><td><img height='100px' src='{file_path}' style='border: green solid 3px'/></td><td>{info_data}</td></div>"
                 images += "</tr>"
         i += 1
-        
+
     images += "</table>"
     return images
 
