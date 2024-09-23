@@ -105,6 +105,7 @@ def process_event(self, src_path):
             # except:
             #     print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
 
+
             data_actions = []
 
             events_root_dir = src_path
