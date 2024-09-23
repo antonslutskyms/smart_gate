@@ -64,7 +64,7 @@ def llm_analyze_event_images(system_prompt, events_root_dir):
 
     prompt, image_urls = rsg.render_prompt(data_actions, images_root_dir = events_root_dir)
 
-    print(f"---- System Prompt:\n{analysis_prompt}\n----")
+    print(f"---- System Prompt:\n{system_prompt}\n----")
 
     print(f"---- User Prompt:\n{prompt}\n----")
 
