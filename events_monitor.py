@@ -185,16 +185,16 @@ def process_event(self, src_path):
 
                 print("\n\n----------------- Sleeping for time to skip subsequent events ------------\n\n")
                 
-                gate_open_timeout = 60
+                gate_open_timeout = 60*3
                 
                 open_or_closed = "open" if is_gate_open else "closed"
 
-                if not is_gate_open:
-                    gate_open_timeout = 300
+                # if not is_gate_open:
+                #     gate_open_timeout = 300
 
                 say_it(f"Gate will be {open_or_closed} for {gate_open_timeout} seconds.")
                 
-                step = 10
+                step = 30
 
                 for i in range(1, gate_open_timeout, step): 
                     time.sleep(step)
