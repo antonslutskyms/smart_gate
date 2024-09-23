@@ -185,7 +185,7 @@ def process_event(self, src_path):
                 
                 step = 5
 
-                print("RRR: ", range(gate_open_timeout, step))
+                print("RRR: ", list(range(gate_open_timeout, step)))
 
                 for i in range(gate_open_timeout, step): 
                     time.sleep(step)
