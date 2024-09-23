@@ -183,11 +183,11 @@ def process_event(self, src_path):
                 
                 say_it(f"Gate will be open for {gate_open_timeout} seconds.")
                 
-                step = 5
+                step = 10
 
                 for i in range(1, gate_open_timeout, step): 
                     time.sleep(step)
-                    say_it(f"{gate_open_timeout - i}")
+                    say_it(f"{gate_open_timeout - i + 1}")
                 
                 say_it("Gate may close now.")
                 print("Getting more events")
