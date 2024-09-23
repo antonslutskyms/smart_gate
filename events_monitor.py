@@ -140,6 +140,13 @@ def process_event(self, src_path):
                 print(f"==== Response:\n{llm_response}\n====")
 
                 maybe_act_on_llm_response(llm_response)
+
+                # Persisting llm results:
+                info_path = src_path.replace("motions", "infos").replace("motion_", "info_")
+                info_path = info_path +"/data_actions.json"
+
+                open(info_path, "w").write(json.dumps(data_actions))
+
                 print("\n\n----------------- Sleeping for time to skip subsequent events ------------\n\n")
                 time.sleep(25)
                 print("Getting more events")
