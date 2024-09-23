@@ -96,7 +96,7 @@ def process_event(self, src_path):
 
             images_filter = None
             try:
-                llm_response = llm_analyze_event_images(system_prompt, events_root_dir, user_prompt_template)
+                llm_response = llm_analyze_event_images(system_prompt, events_root_dir, filter_images_template)
                 print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
 
                 images_filter = json.loads(llm_response)
@@ -116,7 +116,7 @@ def process_event(self, src_path):
                     if not images_filter or i in images_filter:
                         data_actions.append({"type": "image", "path": filename})
                     i += 1 
-                    
+
             print("Data Actions: ", data_actions)
 
             prompt, image_urls = rsg.render_prompt(data_actions, images_root_dir = events_root_dir)
