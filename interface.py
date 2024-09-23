@@ -131,7 +131,7 @@ def copilot():
     try:
         image_filter_req = request.args.get('image_filter')
         print(f"image_filter_req: {image_filter_req}")
-        image_filter = json.load(request.args.get('image_filter')) 
+        image_filter = json.loads(request.args.get('image_filter')) 
     except:
         print("Image filter not found")
 
