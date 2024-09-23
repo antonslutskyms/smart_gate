@@ -108,7 +108,7 @@ def process_event(self, src_path):
             except:
                 print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
 
-            if image_filter:
+            if images_filter:
                 data_actions = []
 
                 
