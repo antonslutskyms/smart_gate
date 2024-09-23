@@ -140,6 +140,8 @@ def copilot():
 
     data_info = json.loads(open(info_path).read())
 
+    filtered_images = data_info["filtered_data_actions"]
+
     images = dump_images(latest_event, image_filter)
 
     copilot_html = copilot_template.render(latest_event = latest_event, 
@@ -161,7 +163,7 @@ def find_latest_event():
     return sorted(dirs, key=lambda x: os.path.getctime(x), reverse=True)
 
 
-def dump_images(directory, image_filter):
+def dump_images(directory, image_filter, filtered_images = None):
     images = "<table width='100%' border=1>"
 
     i = 1
@@ -177,7 +179,11 @@ def dump_images(directory, image_filter):
                 images += "<tr>"
                 info_data = open(info_path).read()
 
-                images += f"<td width='15%'>{filename}</td><td><img height='100px' src='{file_path}' style='border: green solid 3px'/></td><td>{info_data}</td></div>"
+                highlight_color = "gray"
+                if filtered_images and filename in filtered_images:
+                    highlight_color = "red"
+
+                images += f"<td width='15%'>{filename}</td><td><img height='100px' src='{file_path}' style='border: {highlight_color} solid 5px'/></td><td>{info_data}</td></div>"
                 images += "</tr>"
         i += 1
 
