@@ -20,7 +20,7 @@ event_analysis_prompt_template = env.get_template('event_analysis_prompt.jinja')
 
 def say_it(text):
     try:
-        os.system(f"espeak '{text}' 2> /dev/null")
+        os.system(f"espeak -g 3 -s 120 '{text}' 2> /dev/null")
     except:
         print("WARNING: Unable to play sound")
 
@@ -56,7 +56,7 @@ def maybe_act_on_llm_response(llm_response):
         elif json_response["has_object"] == "No":
             #play_sound("no.wav")
             gate_open()
-            say_it("Rodents detected.  Cat is allowed.")
+            say_it("Rodents not detected.  Cat is allowed.")
             
         else:
             print("WARNING: JSON object not supported:", json_response)
@@ -177,7 +177,8 @@ def process_event(self, src_path):
                 info_path = info_path +"/data_actions.json"
 
                 open(info_path, "w").write(json.dumps({"data_actions" : data_actions,
-                                                        "images_description" : llm_response_descr}))
+                                                        "images_description" : llm_response_descr,
+                                                        }))
 
                 print("\n\n----------------- Sleeping for time to skip subsequent events ------------\n\n")
                 
