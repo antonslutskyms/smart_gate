@@ -120,12 +120,23 @@ def call_copilot():
 @app.route('/copilot')
 def copilot():
 
-    event_id = request.args.get('event_id') 
+    event_id = request.args.get('event_id')
+
+
 
     latest_event = event_id #find_latest_event()
 
 
     images = dump_images(latest_event)
+
+    image_filter = [i for in range(len(images))]
+
+    try:
+        image_filter = json.load(request.args.get('image_filter')) 
+    except:
+        print("Image filter not found")
+
+    images = images[image_filter]
 
     copilot_html = copilot_template.render(latest_event = latest_event, 
                                             system_prompt=system_prompt,
