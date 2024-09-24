@@ -193,6 +193,23 @@ def dump_images(directory, image_filter, filtered_images = None):
     images += "</table>"
     return images
 
+
+@app.route('/gate')
+def gate():
+
+    state = request.args.get('state')
+
+    try:
+        if "open" == state:            
+            print("ATTENTION: GATE OPENING")
+            os.system(f"./open.sh")
+            
+        elif "close" == state:
+            print("ATTENTION: GATE CLOSING")
+            os.system(f"./close.sh")
+    except:
+            print("WARNING: Unable to close gate")
+
 @app.route('/last_event')
 def last_event():
 

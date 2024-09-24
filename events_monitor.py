@@ -211,7 +211,7 @@ def process_event(self, src_path):
     # except:
     #     print("ERROR: Event processing failed", sys.exc_info()[0])
     # finally:
-        self.event_threads.remove(src_path)
+        #self.event_threads.remove(src_path)
         print(f"Releasing thread: {src_path}")
         self.lock.release()
 
@@ -225,10 +225,10 @@ class EventHandler(FileSystemEventHandler):
 
 
 
-    def on_any_event(self, event: FileSystemEvent) -> None:
+    def on_created(self, event: FileSystemEvent) -> None:
 
         if os.path.isdir(event.src_path):
-            if "motion_" in event.src_path and len(self.event_threads) == 0:                
+            if "motion_" in event.src_path and event.src_path not in self.event_threads:                
                 
                 print(f"Detected event: {event.src_path} ..............")
                 event_thread = threading.Thread(target = process_event, args = (self, event.src_path,))

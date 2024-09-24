@@ -2,6 +2,15 @@
     <body>
         <table width='100%' height='100%' border=1 align='center' valign='center' >
             <tr>
+                <td colspan="10">
+                    <div>
+                        <input type="button" style="color: green; float:left; height:50px;width:200px" value="Open Gate" onclick=""/>
+                        <input type="button" style="color: red; float:left; height:50px;width:200px" value="Close Gate"/>
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
                 <th>
                     <h1>
                         Current View
@@ -15,11 +24,15 @@
                 </th>
             </tr>
             <tr>
-                <td align='center' valign='center' id="current_frame_view" style="border: red solid 5px">
-                    <img src='motions/current_frame.png' id='current_frame' />
+                <td align='center' valign='center' id="current_frame_view"  >
+                    <img src='motions/current_frame.png' id='current_frame' 
+                                    style="border: red solid 5px"
+                                    onclick="new Image().src='/gate?state=close'"/>
                 </td>
                 <td align='center' valign='center' >    
-                    <img src='motions/event_current.png' id='event_current' style="border: green solid 5px"/>
+                    <img src='motions/event_current.png' id='event_current' 
+                                    style="border: green solid 5px"  
+                                    onclick="new Image().src='/gate?state=close'"/>
                 </td>
                 <td>
                     <div style="overflow-y: scroll; height:400px;">
