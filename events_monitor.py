@@ -17,6 +17,8 @@ env = Environment(loader = FileSystemLoader('templates'))
 filter_images_template = env.get_template('filter_images_template.jinja')
 event_analysis_prompt_template = env.get_template('event_analysis_prompt.jinja')
 
+ignore_events_timeout = 60*3
+
 
 def say_it(text):
     try:
@@ -101,7 +103,9 @@ def process_event(self, src_path):
     if True:
         
         if src_path not in self.event_threads:
-        
+            
+            processing_ts = datetime.datetime.now()
+
             say_it("Event detected.")
             #play_sound()
             gate_close()
@@ -111,7 +115,6 @@ def process_event(self, src_path):
             say_it("Waiting for event to populate.")
             print(f"Processing event: {src_path} events: {self.event_threads}")
             time.sleep(5)
-
 
             print("Checking dir:", src_path)
 
@@ -186,23 +189,23 @@ def process_event(self, src_path):
 
                 print("\n\n----------------- Sleeping for time to skip subsequent events ------------\n\n")
                 
-                gate_open_timeout = 60*3
+                gate_open_timeout = ignore_events_timeout
                 
                 open_or_closed = "open" if is_gate_open else "closed"
 
-                # if not is_gate_open:
-                #     gate_open_timeout = 300
-                
                 say_it(f"Gate will be {open_or_closed} for {gate_open_timeout} seconds.")
                 
                 step = 30
 
+                self.last_process_started = processing_ts
+
                 for i in range(1, gate_open_timeout, step): 
-                    time.sleep(step)
                     say_it(f"{gate_open_timeout - i + 1}")
+                    time.sleep(step)
+
                 
                 say_it("Gate may close now.")
-                print("Getting more events")
+                print("Getting more events", processing_ts)
             else:
                 say_it("Not enough clear images.")
                 print("Not enough clear images")
@@ -222,13 +225,18 @@ class EventHandler(FileSystemEventHandler):
     def __init__(self):
         self.event_threads = []
         self.lock = threading.Lock()
-
-
+        self.last_process_started = None
 
 
     def on_created(self, event: FileSystemEvent) -> None:
+        event_ts = datetime.datetime.now()
 
-        if os.path.isdir(event.src_path):
+        time_since_last_process = (event_ts - self.last_process_started).total_seconds() if self.last_process_started else 10000000
+
+        if time_since_last_process < ignore_events_timeout:
+            print(f"Ignoring event {event} after {time_since_last_process}s since last processing started.")
+        
+        elif os.path.isdir(event.src_path):
             if "motion_" in event.src_path and event.src_path not in self.event_threads:                
                 
                 print(f"Detected event: {event.src_path} ..............")
