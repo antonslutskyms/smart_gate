@@ -177,7 +177,10 @@ def dump_images(directory, image_filter, filtered_images = None):
 
             if os.path.isfile(file_path):
                 images += "<tr>"
-                info_data = open(info_path).read()
+
+                info_data = ""
+                if os.path.isfile(info_path):
+                    info_data = open(info_path).read()
 
                 highlight_color = "gray"
                 if filtered_images and filename in filtered_images:
