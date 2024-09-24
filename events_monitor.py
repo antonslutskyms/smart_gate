@@ -180,7 +180,8 @@ def process_event(self, src_path):
 
                 open(info_path, "w").write(json.dumps({ "unfiltered_data_actions" : all_data_actions, 
                                                         "filtered_data_actions" : data_actions,
-                                                        "llm_response" : llm_response
+                                                        "llm_response" : llm_response,
+                                                        "is_gate_open" : is_gate_open
                                                         }))
 
                 print("\n\n----------------- Sleeping for time to skip subsequent events ------------\n\n")
@@ -191,7 +192,7 @@ def process_event(self, src_path):
 
                 # if not is_gate_open:
                 #     gate_open_timeout = 300
-
+                
                 say_it(f"Gate will be {open_or_closed} for {gate_open_timeout} seconds.")
                 
                 step = 30
