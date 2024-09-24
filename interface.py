@@ -138,12 +138,12 @@ def copilot():
     info_path = latest_event.replace("motions", "infos").replace("motion_", "info_")
     info_path = info_path + "/data_actions.json"
 
-    data_info = "Data Info not Available"
+    data_info = None
     
     if os.path.isfile(info_path):
-        json.loads(open(info_path).read())
+        data_info = json.loads(open(info_path).read())
 
-    filtered_images = [d["path"] for d in data_info["filtered_data_actions"]]
+    filtered_images = [d["path"] for d in data_info["filtered_data_actions"]] if data_info else []
 
     images = dump_images(latest_event, image_filter, filtered_images)
 
