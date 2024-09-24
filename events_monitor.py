@@ -166,9 +166,9 @@ def process_event(self, src_path):
 
                 print(f"==== Response:\n{llm_response}\n====")
 
-                llm_response_descr = rsg.llm_task(user_prompt = prompt, 
-                        system_prompt="How many images do you see?  Describe each image.", 
-                        image_urls = image_urls)
+                # llm_response_descr = rsg.llm_task(user_prompt = prompt, 
+                #         system_prompt="How many images do you see?  Describe each image.", 
+                #         image_urls = image_urls)
 
                 #say_it(llm_response_descr)
 
@@ -180,7 +180,7 @@ def process_event(self, src_path):
 
                 open(info_path, "w").write(json.dumps({ "unfiltered_data_actions" : all_data_actions, 
                                                         "filtered_data_actions" : data_actions,
-                                                        "images_description" : llm_response_descr,
+                                                        "llm_response" : llm_response
                                                         }))
 
                 print("\n\n----------------- Sleeping for time to skip subsequent events ------------\n\n")
