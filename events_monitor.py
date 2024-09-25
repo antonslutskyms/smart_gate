@@ -270,7 +270,7 @@ class EventHandler(FileSystemEventHandler):
 
 
         
-        elif os.path.isdir(event.src_path):
+        if os.path.isdir(event.src_path):
             if "motion_" in event.src_path and event.src_path not in self.event_threads:                
                 # time_since_last_process = (event_ts - self.last_process_started).total_seconds() if self.last_process_started else 10000000
 
