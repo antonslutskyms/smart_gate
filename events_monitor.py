@@ -126,6 +126,7 @@ def process_event(self, src_path):
             #say_it
             
             print(f"\n================ Recieved new event: {src_path}")
+            self.last_process_started = datetime.datetime.now()
             #play_sound()
             gate_close()
             gate_close()
@@ -217,7 +218,9 @@ def process_event(self, src_path):
 
                 #say_it(llm_response_descr)
 
+                print("_____________________________________________________________________________________________")
                 print(f"__________ TIME TO ACTION: {(datetime.datetime.now() - event_process_start_ts).total_seconds()} seconds. __________")
+                print("_____________________________________________________________________________________________")
 
                 is_gate_open = maybe_act_on_llm_response(llm_response)
 
@@ -241,7 +244,7 @@ def process_event(self, src_path):
                 
                 step = 30
 
-                self.last_process_started = datetime.datetime.now()
+                
 
                 for i in range(1, gate_open_timeout, step): 
                     #say_it
