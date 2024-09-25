@@ -25,7 +25,7 @@
                     })
                     .then(data => {
                         console.log(data);
-                        document.getElementById("llm_response").innerHTML = JSON.stringify(data)
+                        //document.getElementById("llm_response").innerHTML = JSON.stringify(data)
         
                         var combined_prompt = document.getElementById("system_prompt").value.trim();
                         combined_prompt = combined_prompt + '\n\n'+JSON.stringify(data)+'\n\n';
@@ -42,7 +42,7 @@
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        document.getElementById("llm_response").innerHTML = '<b>Error: '+error+'</b>'
+                        //document.getElementById("llm_response").innerHTML = '<b>Error: '+error+'</b>'
                     });
                 }
         </script>
@@ -51,22 +51,25 @@
         <center><h1>{{latest_event}}</h1></center>
         <table border=1 width='100%'>
             <tr>
-                <td width='50%'>
-                    <h2>System Prompt:</h2>
+                <tr>
+                    <th>System Prompt</th>
+                    <th>Images</th>
+                    <th>Results</th>
+                </tr>
+            </tr>
+            <tr>
+                <td width='100%'>
                     <textarea cols='100' rows='15' id='system_prompt'>{{system_prompt}}</textarea>
-                    <h2>Data:</h2>
-                    <div>
-                    {{images}}
-                    </div>
                 </td>
                 <td>
-                    <div id='llm_response'>&nbsp;</div>
+                    {{images}}
+                </td>
+                <td>
+                    {{data_info}}
                 </td>
             </tr>
         </table>
-        <div style="border: 3px gray solid">
-            {{data_info}}
-        </div>
+        
         <center>
             <input type='button' id='call_copilot' value='Submit' style='height:50px;width:200px' onclick='call_copilot()'/>
         </center>
