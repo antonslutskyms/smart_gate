@@ -15,7 +15,7 @@
             <tr>
                 <th>
                     <h1>
-                        Current View
+                        <div id="current_time"></div>
                     </h1>
                 </th>
                 <th>
@@ -69,12 +69,14 @@
 
                 
                 document.getElementById("current_frame").src = url
+                var currentTime = new Date();
+                document.getElementById("current_time").innerHTML = currentTime
                 
                 
 
             }
 
-            setInterval(update_current_view, 3000);
+            setInterval(update_current_view, 1000);
             setInterval(function () {document.getElementById("event_current").src = 'motions/event_current.png?t=' + new Date().getTime();}, 5000);
             //setInterval(function () {document.getElementById("last_events").contentWindow.location.reload()}, 5000);
         </script>
