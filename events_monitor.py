@@ -190,6 +190,8 @@ def process_event(self, src_path):
 
                 #say_it(llm_response_descr)
 
+                print(f"__________ TIME TO ACTION: {(datetime.datetime.now() - event_process_start_ts).total_seconds()} seconds. __________")
+
                 is_gate_open = maybe_act_on_llm_response(llm_response)
 
                 # Persisting llm results:
