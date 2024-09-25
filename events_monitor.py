@@ -249,7 +249,7 @@ def process_event(self, src_path):
 
                 for i in range(1, gate_open_timeout, step): 
                     #say_it
-                    print(f"{gate_open_timeout - i + 1}")
+                    print(f"{gate_open_timeout - i + 1} seconds remaining. {datetime.datetime.now()}")
                     time.sleep(step)
 
                 
