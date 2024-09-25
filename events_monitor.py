@@ -226,7 +226,7 @@ def process_event(self, src_path):
             else:
                 #say_it("Not enough clear images.")
                 print("Not enough clear images")
-                self.event_threads.remove(self.src_path)
+                self.event_threads.remove(src_path)
                 print("Now event threads: ", self.event_threads)
         else:
             print("Race condition")
