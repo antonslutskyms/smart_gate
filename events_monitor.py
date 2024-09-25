@@ -44,18 +44,21 @@ def color_toggle(color, on_off):
 def gate_open():
     try:
         print("ATTENTION: GATE OPENING")
-        os.system(f"python3.10 servo3.py 20")
         color_toggle("red", "off")
         color_toggle("green", "on")
+        os.system(f"python3.10 servo3.py 20")
     except:
         print("WARNING: Unable to open gate")
 
 def gate_close():
     try:
         print("ATTENTION: GATE CLOSING")
-        os.system(f"python3.10 servo3.py 170")
-        color_toggle("red", "on")
         color_toggle("green", "off")
+        color_toggle("red", "on")
+
+        os.system(f"python3.10 servo3.py 170")
+        
+        
         print("Toggled color!!!!!!!!!!!!!")
     except:
         print("WARNING: Unable to close gate")
