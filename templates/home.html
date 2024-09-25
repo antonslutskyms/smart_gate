@@ -62,11 +62,9 @@
                 var test_image = new Image()
                 test_image.src = url
 
-                if(test_image.complete)
-                {
-                    document.getElementById("current_frame").src = url
-                }
-                else{console.log("Incomplete image");}
+                
+                document.getElementById("current_frame").src = url
+                
                 
 
             }
