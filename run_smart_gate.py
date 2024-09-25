@@ -13,6 +13,8 @@ import copy
 import json
 import sys
 
+import datetime
+
 from jinja2 import Environment, FileSystemLoader
 
 
@@ -119,6 +121,15 @@ def render_prompt(data_actions, images_root_dir = "cat_pics"):
     return prompt, images_urls
 
 def llm_task(user_prompt, image_urls, system_prompt):    
+    
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+    llm_start_ts = atetime.datetime.now()
+
+    
+
     user_content = [{
                 "type": "text",
                 "text": user_prompt,
@@ -149,6 +160,11 @@ def llm_task(user_prompt, image_urls, system_prompt):
     fixed_json = fixed_json.replace("```json", "").replace("```", "")
     print(f"~~~~~~~~~~~~~~~~~ {deployment_name} Response Json ~~~~~~~~~~~~~~~~~")
     print(fixed_json)
+
+    llm_time = int((datetime.datetime.now() - llm_start_ts).total_seconds())
+
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print(f"~~~~~~~~~~~~~~~~~~~ {llm_time}s ~~~~~~~~~~~~~~~~~~")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     return fixed_json
 

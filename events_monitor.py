@@ -75,7 +75,8 @@ def llm_analyze_event_images(system_prompt, events_root_dir):
 
     dir_list = os.listdir(events_root_dir)
 
-    say_it(f"Analyzing {len(dir_list)} images.")            
+    print(f"Analyzing {len(dir_list)} images.")
+    #say_it(f"Analyzing {len(dir_list)} images.")            
 
     for filename in dir_list:
         file_path = os.path.join(events_root_dir, filename)
@@ -104,23 +105,25 @@ def process_event(self, src_path):
     if True:
         
         if src_path not in self.event_threads:
-            
-            processing_ts = datetime.datetime.now()
 
-            say_it("Event detected.")
+            #say_it
+            print("Event detected.")
             #play_sound()
             gate_close()
 
             self.event_threads.append(src_path)
 
-            say_it("Waiting for event to populate.")
+            #say_it
+            print("Waiting for event to populate.")
             print(f"Processing event: {src_path} events: {self.event_threads}")
-            time.sleep(5)
+            time.sleep(7)
 
             print("Checking dir:", src_path)
 
             events_root_dir = src_path
 
+            llm_filtering_start_ts = datetime.datetime.now()
+            
             images_filter = None
             try:
                 analysis_prompt = filter_images_template.render()
@@ -131,12 +134,17 @@ def process_event(self, src_path):
 
                 best_pic_str = " ".join([str(i) for i in images_filter])
 
-                say_it(f"Best pics are {best_pic_str} images.")
+                #say_it
+                print(f"Best pics are {best_pic_str} images.")
 
                 print(f"[IMAGE FILTER] filter: {images_filter}")
             except:
                 print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
                 say_it("Warning! Error filtering images.")
+
+            llm_filtering_time = int((datetime.datetime.now() - llm_filtering_start_ts).total_seconds())
+
+            print(f"DATA: Filter {llm_filtering_time} seconds.")
 
             if images_filter:
                 
