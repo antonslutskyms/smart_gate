@@ -261,7 +261,7 @@ def home():
     i = 0
     recent_events = ""
     for dir in directories:
-        info_path = src_path.replace("motions", "infos").replace("motion_", "info_")
+        info_path = last_event.replace("motions", "infos").replace("motion_", "info_")
         info_path = info_path +"/data_actions.json"
         
         font_style = "bold"
