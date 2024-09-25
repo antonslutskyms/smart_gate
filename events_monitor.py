@@ -130,6 +130,7 @@ def process_event(self, src_path):
             #play_sound()
             gate_close()
             gate_close()
+            gate_close()
 
             self.event_threads.append(src_path)
 
