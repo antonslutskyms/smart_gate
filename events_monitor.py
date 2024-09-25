@@ -107,7 +107,7 @@ def process_event(self, src_path):
         if src_path not in self.event_threads:
 
             #say_it
-            event_process_start_ts = datetime.datetime.now()
+            
             print(f"\n================ Recieved new event: {src_path}")
             #play_sound()
             gate_close()
@@ -124,6 +124,7 @@ def process_event(self, src_path):
                 print(f"{i} of {t} s")
                 time.sleep(1)
 
+            event_process_start_ts = datetime.datetime.now()
             print("Checking dir:", src_path)
 
             events_root_dir = src_path
