@@ -59,6 +59,8 @@ def maybe_act_on_llm_response(llm_response):
         elif json_response["has_object"] == "No":
             #play_sound("no.wav")
             gate_open()
+            gate_open()
+            gate_open()
             return True
             
         else:
@@ -110,6 +112,8 @@ def process_event(self, src_path):
             
             print(f"\n================ Recieved new event: {src_path}")
             #play_sound()
+            gate_close()
+            gate_close()
             gate_close()
 
             self.event_threads.append(src_path)
