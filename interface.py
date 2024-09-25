@@ -268,7 +268,8 @@ def home():
         indicator = "."
         indicator_color = "gray"
 
-        print("INfofile: ", info_file)
+        print("INfofile: ", info_path)
+        
         if os.path.isfile(info_path):
             info_file = json.loads(info_path)
             is_gate_open = info_file["is_gate_open"]
