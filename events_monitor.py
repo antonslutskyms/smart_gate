@@ -233,7 +233,8 @@ def process_event(self, src_path):
                 self.last_process_started = datetime.datetime.now()
 
                 for i in range(1, gate_open_timeout, step): 
-                    say_it(f"{gate_open_timeout - i + 1}")
+                    #say_it
+                    print(f"{gate_open_timeout - i + 1}")
                     time.sleep(step)
 
                 
@@ -267,14 +268,15 @@ class EventHandler(FileSystemEventHandler):
     def on_created(self, event: FileSystemEvent) -> None:
         event_ts = datetime.datetime.now()
 
-        time_since_last_process = (event_ts - self.last_process_started).total_seconds() if self.last_process_started else 10000000
 
-        if time_since_last_process < ignore_events_timeout:
-            print(f"Ignoring event {event} after {time_since_last_process}s since last processing started.")
         
         elif os.path.isdir(event.src_path):
             if "motion_" in event.src_path and event.src_path not in self.event_threads:                
-                
+                # time_since_last_process = (event_ts - self.last_process_started).total_seconds() if self.last_process_started else 10000000
+
+                # if time_since_last_process < ignore_events_timeout:
+                #     print(f"Ignoring event {event} after {time_since_last_process}s since last processing started.")
+                # else:
                 print(f"Detected event: {event.src_path} ..............")
                 event_thread = threading.Thread(target = process_event, args = (self, event.src_path,))
                 event_thread.start()
