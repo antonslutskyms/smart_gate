@@ -273,7 +273,7 @@ def home():
 
         indicator = f"<font style='color: {'green' if '+' == indicator else 'red'}'>({indicator})</font>"
 
-        recent_events += f"<br/><a href='copilot?event_id={dir}'>{dir}</a>"
+        recent_events += f"<br/>{indicator}&nbps;<a href='copilot?event_id={dir}'>{dir}</a>"
 
 
     return home_template.render(recent_events = recent_events, last_event=last_event, event_images = images)
