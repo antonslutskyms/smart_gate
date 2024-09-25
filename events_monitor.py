@@ -19,6 +19,7 @@ filter_images_template = env.get_template('filter_images_template.jinja')
 event_analysis_prompt_template = env.get_template('event_analysis_prompt.jinja')
 
 ignore_events_timeout = 60*3
+min_num_pics = 5
 
 
 def say_it(text):
@@ -58,7 +59,6 @@ def maybe_act_on_llm_response(llm_response):
             return False
         elif json_response["has_object"] == "No":
             #play_sound("no.wav")
-            gate_open()
             gate_open()
             gate_open()
             return True
@@ -114,7 +114,6 @@ def process_event(self, src_path):
             #play_sound()
             gate_close()
             gate_close()
-            gate_close()
 
             self.event_threads.append(src_path)
 
@@ -128,8 +127,16 @@ def process_event(self, src_path):
                 print(f"{i} of {t} s")
                 time.sleep(1)
 
+                num_pics = len(os.listdir(events_root_dir))
+                print(f"Checking dir: {src_path} | Num Pics: {num_pics}")
+                if num_pics >= min_num_pics:
+                    print("Mimimum pics detected")
+                    break
+                
+
+
             event_process_start_ts = datetime.datetime.now()
-            print("Checking dir:", src_path)
+            
 
             events_root_dir = src_path
 
