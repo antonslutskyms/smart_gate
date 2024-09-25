@@ -168,7 +168,7 @@ def find_latest_event():
 
 def dump_images(directory, image_filter, 
                     filtered_images = None, 
-                    img_height_px=100,
+                    img_height_px=80,
                     show_filename = True,
                     show_image = True,
                     show_info = True
@@ -261,6 +261,18 @@ def home():
     i = 0
     recent_events = ""
     for dir in directories:
+        info_path = src_path.replace("motions", "infos").replace("motion_", "info_")
+        info_path = info_path +"/data_actions.json"
+        
+        font_style = "bold"
+        indicator = "."
+        if os.path.isfile(info_path):
+            info_file = json.loads(info_path)
+            is_gate_open = info_file["is_gate_open"]
+            indicator = "+" if is_gate_open else "-"  
+
+        indicator = f"<font style='color: {'green' if '+' == indicator else 'red'}'>({indicator})</font>"
+
         recent_events += f"<br/><a href='copilot?event_id={dir}'>{dir}</a>"
 
 
