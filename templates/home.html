@@ -59,7 +59,14 @@
             function update_current_view(){
                 var url = 'motions/current_frame.png?t=' + new Date().getTime()
                 
-                document.getElementById("current_frame").src = url
+                var test_image = new Image()
+                test_image.src = url
+
+                if(test_image.complete)
+                {
+                    document.getElementById("current_frame").src = url
+                }
+                
 
             }
 
