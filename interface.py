@@ -271,7 +271,7 @@ def home():
         print("INfofile: ", info_path)
 
         if os.path.isfile(info_path):
-            info_file = json.load(info_path)
+            info_file = json.loads(open(info_path).read())
             is_gate_open = info_file["is_gate_open"]
             indicator = "+" if is_gate_open else "-"
             indicator_color = "green" if is_gate_open else "false"  
