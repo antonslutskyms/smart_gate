@@ -245,7 +245,8 @@ def process_event(self, src_path):
                 step = 30
 
                 
-
+                self.last_process_started = datetime.datetime.now()
+                
                 for i in range(1, gate_open_timeout, step): 
                     #say_it
                     print(f"{gate_open_timeout - i + 1} seconds remaining. {datetime.datetime.now()}")
