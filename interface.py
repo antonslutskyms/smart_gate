@@ -261,7 +261,7 @@ def home():
     i = 0
     recent_events = ""
     for dir in directories:
-        info_path = last_event.replace("motions", "infos").replace("motion_", "info_")
+        info_path = dir.replace("motions", "infos").replace("motion_", "info_")
         info_path = info_path +"/data_actions.json"
         
         font_style = "bold"
@@ -269,7 +269,7 @@ def home():
         indicator_color = "gray"
 
         print("INfofile: ", info_path)
-        
+
         if os.path.isfile(info_path):
             info_file = json.loads(info_path)
             is_gate_open = info_file["is_gate_open"]
