@@ -146,7 +146,7 @@ def process_event(self, src_path):
 
             images_filter = [i for i in range(len(events_root_dir_list))]
 
-            if False:
+            if True:
                 #try:
                 analysis_prompt = filter_images_template.render()
                 llm_response = llm_analyze_event_images(analysis_prompt, events_root_dir)
