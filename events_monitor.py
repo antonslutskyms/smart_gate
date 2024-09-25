@@ -19,7 +19,7 @@ filter_images_template = env.get_template('filter_images_template.jinja')
 event_analysis_prompt_template = env.get_template('event_analysis_prompt.jinja')
 
 ignore_events_timeout = 60*3
-min_num_pics = 5
+min_num_pics = 7
 
 
 def say_it(text):
@@ -116,7 +116,7 @@ def llm_analyze_event_images(system_prompt, events_root_dir):
 def process_event(self, src_path):
     #print(src_path)
     
-    self.lock.acquire()
+    #self.lock.acquire()
 
 #    try:
     if True:
@@ -268,7 +268,7 @@ def process_event(self, src_path):
     # finally:
         #self.event_threads.remove(src_path)
         print(f"~~~~~ Releasing thread: {src_path}. Event Process Time: {int((datetime.datetime.now() - event_process_start_ts).total_seconds())} seconds. ~~~")
-        self.lock.release()
+        #self.lock.release()
         
 
 
