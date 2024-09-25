@@ -150,11 +150,8 @@ def process_event(self, src_path):
                     print("Mimimum pics detected")
                     break
                 
-
-
             event_process_start_ts = datetime.datetime.now()
             
-
             events_root_dir = src_path
 
             llm_filtering_start_ts = datetime.datetime.now()
@@ -254,13 +251,14 @@ def process_event(self, src_path):
                     time.sleep(step)
 
                 
-                say_it("Gate may close now.")
+                #say_it
+                print("Gate may close now.")
                 print("Getting more events")
             else:
                 #say_it("Not enough clear images.")
                 print("Not enough clear images")
                 self.event_threads.remove(src_path)
-                self.last_process_started = datetime.datetime.now() - - datetime.timedelta(seconds=ignore_events_timeout+1)
+                self.last_process_started = datetime.datetime.now() - datetime.timedelta(seconds=ignore_events_timeout+1)
                 print("Now event threads: ", self.event_threads)
         else:
             print("Race condition")
