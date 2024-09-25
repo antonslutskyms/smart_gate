@@ -127,7 +127,7 @@ def process_event(self, src_path):
                 print(f"{i} of {t} s")
                 time.sleep(1)
 
-                num_pics = len(os.listdir(events_root_dir))
+                num_pics = len(os.listdir(src_path))
                 print(f"Checking dir: {src_path} | Num Pics: {num_pics}")
                 if num_pics >= min_num_pics:
                     print("Mimimum pics detected")
