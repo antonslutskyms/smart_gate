@@ -131,27 +131,31 @@ def process_event(self, src_path):
 
             llm_filtering_start_ts = datetime.datetime.now()
             
-            images_filter = None
-            #try:
-            analysis_prompt = filter_images_template.render()
-            llm_response = llm_analyze_event_images(analysis_prompt, events_root_dir)
-            print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
+            events_root_dir_list = os.listdir(events_root_dir)
 
-            images_filter = json.loads(llm_response)
+            images_filter = [i for i in range(len(events_root_dir_list))]
 
-            best_pic_str = " ".join([str(i) for i in images_filter])
+            if False:
+                #try:
+                analysis_prompt = filter_images_template.render()
+                llm_response = llm_analyze_event_images(analysis_prompt, events_root_dir)
+                print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
 
-            #say_it
-            print(f"Best pics are {best_pic_str} images.")
+                images_filter = json.loads(llm_response)
 
-            print(f"[IMAGE FILTER] filter: {images_filter}")
-            # except:
-            #     print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
-            #     say_it("Warning! Error filtering images.")
+                best_pic_str = " ".join([str(i) for i in images_filter])
 
-            llm_filtering_time = int((datetime.datetime.now() - llm_filtering_start_ts).total_seconds())
+                #say_it
+                print(f"Best pics are {best_pic_str} images.")
 
-            print(f"DATA: Filter {llm_filtering_time} seconds.")
+                print(f"[IMAGE FILTER] filter: {images_filter}")
+                # except:
+                #     print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
+                #     say_it("Warning! Error filtering images.")
+
+                llm_filtering_time = int((datetime.datetime.now() - llm_filtering_start_ts).total_seconds())
+
+                print(f"DATA: Filter {llm_filtering_time} seconds.")
 
             if images_filter:
                 
