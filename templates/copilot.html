@@ -51,6 +51,17 @@
         <center><h1>{{latest_event}}</h1></center>
         <table border=1 width='100%'>
             <tr>
+                <td colspan="10">
+                    <div style="width: 100%">
+                        <input type="button" style="color: green; float:left; height:50px;width:200px" value="Open Gate" 
+                                        onclick="new Image().src='/gate?state=open'"/>
+                        <input type="button" style="color: red; float:right; height:50px;width:200px" value="Close Gate"
+                                        onclick="new Image().src='/gate?state=close'"/>
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
                 <tr>
                     <th>System Prompt</th>
                     <th>Images</th>
@@ -59,7 +70,7 @@
             </tr>
             <tr>
                 <td>
-                    <textarea cols='100' rows='15' id='system_prompt'>{{system_prompt}}</textarea>
+                    <textarea cols='70' rows='15' id='system_prompt'>{{system_prompt}}</textarea>
                 </td>
                 <td>
                     {{images}}
