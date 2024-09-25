@@ -259,7 +259,7 @@ def process_event(self, src_path):
                 #say_it("Not enough clear images.")
                 print("Not enough clear images")
                 self.event_threads.remove(src_path)
-                self.last_process_started = datetime.datetime.now() - - datetime.timedelta(seconds=gate_open_timeout+1)
+                self.last_process_started = datetime.datetime.now() - - datetime.timedelta(seconds=ignore_events_timeout+1)
                 print("Now event threads: ", self.event_threads)
         else:
             print("Race condition")
