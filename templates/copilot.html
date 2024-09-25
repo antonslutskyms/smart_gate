@@ -71,6 +71,7 @@
             <tr>
                 <td width="20%">
                     <textarea cols='70' rows='15' id='system_prompt'>{{system_prompt}}</textarea>
+                    <input type='button' id='call_copilot' value='Submit' style='height:50px;width:200px' onclick='call_copilot()'/>
                 </td>
                 <td width="50%">
                     {{images}}
@@ -81,9 +82,6 @@
             </tr>
         </table>
         
-        <center>
-            <input type='button' id='call_copilot' value='Submit' style='height:50px;width:200px' onclick='call_copilot()'/>
-        </center>
         <!--audio id="say_it" src="motions/latest.wav"></audio-->
     </body>
 </html>
