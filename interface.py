@@ -249,7 +249,7 @@ def home():
     for dir in directories:
         recent_events += f"<br/><a href='copilot?event_id={dir}'>{dir}</a>"
 
-    
+    print("!!!!!!!!!!!!!!!!!!!!!!!!", images)
 
 
     return home_template.render(recent_events = recent_events, last_event=last_event, event_images = images)
