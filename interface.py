@@ -256,7 +256,7 @@ def home():
 
     last_event = directories[0] if "event_id" not in request.args else request.args.get("event_id")
 
-    images = dump_images(last_event, None)
+    images = dump_images(last_event, None, show_filename=False, show_info=False)
 
     i = 0
     recent_events = ""
