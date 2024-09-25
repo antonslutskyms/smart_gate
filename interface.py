@@ -273,11 +273,12 @@ def home():
         if os.path.isfile(info_path):
             info_js = open(info_path).read()
             print("JSON: ", info_js)
-            
+
             info_file = json.loads(info_js)
-            is_gate_open = info_file["is_gate_open"]
-            indicator = "+" if is_gate_open else "-"
-            indicator_color = "green" if is_gate_open else "false"  
+            if "is_gate_open" in info_file:
+                is_gate_open = info_file["is_gate_open"] 
+                indicator = "+" if is_gate_open else "-"
+                indicator_color = "green" if is_gate_open else "false"  
 
 
         indicator = f"<font style='color: {indicator_color}'>({indicator})</font>"
