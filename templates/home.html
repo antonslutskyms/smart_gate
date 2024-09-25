@@ -22,7 +22,7 @@
                     <h1>{{last_event}}</h1>
                 </th>
                 <th>
-                    <h1>Recent Events</h1>
+                    <h3>Recent Events</h3>
                 </th>
             </tr>
             <tr>
@@ -76,7 +76,7 @@
 
             }
 
-            setInterval(update_current_view, 1000);
+            setInterval(update_current_view, 3000);
             setInterval(function () {document.getElementById("event_current").src = 'motions/event_current.png?t=' + new Date().getTime();}, 5000);
             //setInterval(function () {document.getElementById("last_events").contentWindow.location.reload()}, 5000);
         </script>
