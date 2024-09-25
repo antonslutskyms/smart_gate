@@ -126,7 +126,7 @@ def llm_task(user_prompt, image_urls, system_prompt):
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
-    llm_start_ts = atetime.datetime.now()
+    llm_start_ts = datetime.datetime.now()
 
     
 
