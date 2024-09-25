@@ -166,7 +166,13 @@ def find_latest_event():
     return sorted(dirs, key=lambda x: os.path.getctime(x), reverse=True)
 
 
-def dump_images(directory, image_filter, filtered_images = None, img_height_px=100):
+def dump_images(directory, image_filter, 
+                    filtered_images = None, 
+                    img_height_px=100,
+                    show_filename = True,
+                    show_image = True,
+                    show_info = True
+                    ):
     images = "<table width='100%' border=1>"
 
     i = 1
@@ -189,7 +195,15 @@ def dump_images(directory, image_filter, filtered_images = None, img_height_px=1
                 if filtered_images and filename in filtered_images:
                     highlight_color = "red"
 
-                images += f"<td width='15%'>{filename}</td><td><img height='{img_height_px}px' src='{file_path}' style='border: {highlight_color} solid 5px'/></td><td>{info_data}</td></div>"
+                if show_filename:
+                    images += f"<td width='15%'>{filename}</td>"
+    
+                if show_image:
+                    images += f"<td><img height='{img_height_px}px' src='{file_path}' style='border: {highlight_color} solid 5px'/></td>"
+    
+                if show_info:
+                    images += f"<td>{info_data}</td></div>"
+                    
                 images += "</tr>"
         i += 1
 
@@ -248,8 +262,6 @@ def home():
     recent_events = ""
     for dir in directories:
         recent_events += f"<br/><a href='copilot?event_id={dir}'>{dir}</a>"
-
-    print("!!!!!!!!!!!!!!!!!!!!!!!!", images)
 
 
     return home_template.render(recent_events = recent_events, last_event=last_event, event_images = images)
