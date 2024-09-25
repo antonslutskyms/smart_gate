@@ -206,7 +206,7 @@ def process_event(self, src_path):
                 
                 step = 30
 
-                self.last_process_started = processing_ts
+                self.last_process_started = datetime.datetime.now()
 
                 for i in range(1, gate_open_timeout, step): 
                     say_it(f"{gate_open_timeout - i + 1}")
@@ -214,7 +214,7 @@ def process_event(self, src_path):
 
                 
                 say_it("Gate may close now.")
-                print("Getting more events", processing_ts)
+                print("Getting more events")
             else:
                 #say_it("Not enough clear images.")
                 print("Not enough clear images")
