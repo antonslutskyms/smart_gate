@@ -107,7 +107,8 @@ def process_event(self, src_path):
         if src_path not in self.event_threads:
 
             #say_it
-            print("Event detected.")
+            event_process_start_ts = datetime.datetime.now()
+            print(f"\n================ Recieved new event: {src_path}")
             #play_sound()
             gate_close()
 
@@ -116,7 +117,12 @@ def process_event(self, src_path):
             #say_it
             print("Waiting for event to populate.")
             print(f"Processing event: {src_path} events: {self.event_threads}")
-            time.sleep(7)
+
+            t = 6
+            print("Observing gate for....")        
+            for i in range(t):
+                print(f"{i} of {t} s")
+                time.sleep(1)
 
             print("Checking dir:", src_path)
 
@@ -227,8 +233,9 @@ def process_event(self, src_path):
     #     print("ERROR: Event processing failed", sys.exc_info()[0])
     # finally:
         #self.event_threads.remove(src_path)
-        print(f"Releasing thread: {src_path}")
+        print(f"~~~~~ Releasing thread: {src_path}. Event Process Time: {int((datetime.datetime.now() - event_process_start_ts).total_seconds())} seconds. ~~~")
         self.lock.release()
+        
 
 
 
