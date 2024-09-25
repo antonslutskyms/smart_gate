@@ -216,8 +216,10 @@ def process_event(self, src_path):
                 say_it("Gate may close now.")
                 print("Getting more events", processing_ts)
             else:
-                say_it("Not enough clear images.")
+                #say_it("Not enough clear images.")
                 print("Not enough clear images")
+                self.event_threads.remove(self.src_path)
+                print("Now event threads: ", self.event_threads)
         else:
             print("Race condition")
         
