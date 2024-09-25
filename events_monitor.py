@@ -136,7 +136,7 @@ def process_event(self, src_path):
             print("Waiting for event to populate.")
             print(f"Processing event: {src_path} events: {self.event_threads}")
 
-            t = 6
+            t = 10
             print("Observing gate for....")        
             for i in range(t):
                 print(f"{i} of {t} s")
