@@ -125,22 +125,22 @@ def process_event(self, src_path):
             llm_filtering_start_ts = datetime.datetime.now()
             
             images_filter = None
-            try:
-                analysis_prompt = filter_images_template.render()
-                llm_response = llm_analyze_event_images(analysis_prompt, events_root_dir)
-                print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
+            #try:
+            analysis_prompt = filter_images_template.render()
+            llm_response = llm_analyze_event_images(analysis_prompt, events_root_dir)
+            print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
 
-                images_filter = json.loads(llm_response)
+            images_filter = json.loads(llm_response)
 
-                best_pic_str = " ".join([str(i) for i in images_filter])
+            best_pic_str = " ".join([str(i) for i in images_filter])
 
-                #say_it
-                print(f"Best pics are {best_pic_str} images.")
+            #say_it
+            print(f"Best pics are {best_pic_str} images.")
 
-                print(f"[IMAGE FILTER] filter: {images_filter}")
-            except:
-                print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
-                say_it("Warning! Error filtering images.")
+            print(f"[IMAGE FILTER] filter: {images_filter}")
+            # except:
+            #     print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
+            #     say_it("Warning! Error filtering images.")
 
             llm_filtering_time = int((datetime.datetime.now() - llm_filtering_start_ts).total_seconds())
 
