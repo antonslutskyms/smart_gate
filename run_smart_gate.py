@@ -123,7 +123,7 @@ def render_prompt(data_actions, images_root_dir = "cat_pics"):
 def llm_task(user_prompt, image_urls, system_prompt):    
     
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("~~~~~~~~~~~~~~~~ START LLM TASK ~~~~~~~~~~~~~~~~~~~")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
     llm_start_ts = datetime.datetime.now()
@@ -164,7 +164,7 @@ def llm_task(user_prompt, image_urls, system_prompt):
     llm_time = int((datetime.datetime.now() - llm_start_ts).total_seconds())
 
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    print(f"~~~~~~~~~~~~~~~~~~~ {llm_time}s ~~~~~~~~~~~~~~~~~~")
+    print(f"~~~~~~~~~~ END LLM TASK [{llm_time}s] ~~~~~~~~~~~~~~~")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     return fixed_json
 
