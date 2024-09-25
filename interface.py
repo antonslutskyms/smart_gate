@@ -266,14 +266,19 @@ def home():
         
         font_style = "bold"
         indicator = "."
+        indicator_color = "gray"
+
+        print("INfofile: ", info_file)
         if os.path.isfile(info_path):
             info_file = json.loads(info_path)
             is_gate_open = info_file["is_gate_open"]
-            indicator = "+" if is_gate_open else "-"  
+            indicator = "+" if is_gate_open else "-"
+            indicator_color = "green" if is_gate_open else "false"  
 
-        indicator = f"<font style='color: {'green' if '+' == indicator else 'red'}'>({indicator})</font>"
 
-        recent_events += f"<br/>{indicator}&nbps;<a href='copilot?event_id={dir}'>{dir}</a>"
+        indicator = f"<font style='color: {indicator_color}'>({indicator})</font>"
+
+        recent_events += f"<br/>{indicator}&nbsp;<a href='copilot?event_id={dir}'>{dir}</a>"
 
 
     return home_template.render(recent_events = recent_events, last_event=last_event, event_images = images)
