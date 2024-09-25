@@ -34,10 +34,19 @@ def play_sound(file = "event_detected.wav"):
     except:
         print("WARNING: Unable to play sound")
 
+def color_toggle(color, on_off):
+    try:
+        print("ATTENTION: COLOR CHANGING", color, on_off)
+        os.system(f"python3.10 {color}_{on_off}")
+    except:
+        print("WARNING: Unable to open gate")
+
 def gate_open():
     try:
         print("ATTENTION: GATE OPENING")
         os.system(f"python3.10 servo3.py 20")
+        color_toggle("red", "off")
+        color_toggle("green", "on")
     except:
         print("WARNING: Unable to open gate")
 
@@ -45,6 +54,8 @@ def gate_close():
     try:
         print("ATTENTION: GATE CLOSING")
         os.system(f"python3.10 servo3.py 170")
+        color_toggle("red", "on")
+        color_toggle("green", "off")
     except:
         print("WARNING: Unable to close gate")
 
