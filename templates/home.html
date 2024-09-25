@@ -26,7 +26,7 @@
                 </th>
             </tr>
             <tr>
-                <td align='center' valign='center' id="current_frame_view"  >
+                <td align='center' valign='center' id="current_frame_view" width="110px"  >
                     <img src='motions/current_frame.png' id='current_frame0' 
                                     style="border: red solid 5px; display: block"/>
                     <img src='motions/current_frame.png' id='current_frame1' 
@@ -61,22 +61,7 @@
             function update_current_view(){
                 var url = 'motions/current_frame.png?t=' + new Date().getTime()
                 
-                var cf0 = document.getElementById("current_frame0")
-                var cf1 = document.getElementById("current_frame1")
-
-                var target_cf = cf0;
-                var to_hide = cf1;
-
-                if(cf0.style.display == "block"){
-                    target_cf = cf1;
-                    to_hide = cf0;
-                }
-                
-                target_cf.src = url
-                to_hide.style.display = "none"
-                target_cf.style.display = "block"
-
-                //document.getElementById("current_frame").src = url
+                document.getElementById("current_frame").src = url
 
             }
 
