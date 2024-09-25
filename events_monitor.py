@@ -215,10 +215,6 @@ def process_event(self, src_path):
 
                 print(f"==== Response:\n{llm_response}\n====")
 
-                # llm_response_descr = rsg.llm_task(user_prompt = prompt, 
-                #         system_prompt="How many images do you see?  Describe each image.", 
-                #         image_urls = image_urls)
-
                 #say_it(llm_response_descr)
 
                 print(f"__________ TIME TO ACTION: {(datetime.datetime.now() - event_process_start_ts).total_seconds()} seconds. __________")
@@ -287,14 +283,14 @@ class EventHandler(FileSystemEventHandler):
         
         if os.path.isdir(event.src_path):
             if "motion_" in event.src_path and event.src_path not in self.event_threads:                
-                # time_since_last_process = (event_ts - self.last_process_started).total_seconds() if self.last_process_started else 10000000
+                time_since_last_process = (event_ts - self.last_process_started).total_seconds() if self.last_process_started else 10000000
 
-                # if time_since_last_process < ignore_events_timeout:
-                #     print(f"Ignoring event {event} after {time_since_last_process}s since last processing started.")
-                # else:
-                print(f"Detected event: {event.src_path} ..............")
-                event_thread = threading.Thread(target = process_event, args = (self, event.src_path,))
-                event_thread.start()
+                if time_since_last_process < ignore_events_timeout:
+                    print(f"Ignoring event {event} after {time_since_last_process}s since last processing started.")
+                else:
+                    print(f"Detected event: {event.src_path} ..............")
+                    event_thread = threading.Thread(target = process_event, args = (self, event.src_path,))
+                    event_thread.start()
             elif event.src_path != "./motions":
                 print(f"Event dropped: {event.src_path} ..............")
 
