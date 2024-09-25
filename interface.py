@@ -166,7 +166,7 @@ def find_latest_event():
     return sorted(dirs, key=lambda x: os.path.getctime(x), reverse=True)
 
 
-def dump_images(directory, image_filter, filtered_images = None):
+def dump_images(directory, image_filter, filtered_images = None, img_height_px=100):
     images = "<table width='100%' border=1>"
 
     i = 1
@@ -189,7 +189,7 @@ def dump_images(directory, image_filter, filtered_images = None):
                 if filtered_images and filename in filtered_images:
                     highlight_color = "red"
 
-                images += f"<td width='15%'>{filename}</td><td><img height='100px' src='{file_path}' style='border: {highlight_color} solid 5px'/></td><td>{info_data}</td></div>"
+                images += f"<td width='15%'>{filename}</td><td><img height='{img_height_px}px' src='{file_path}' style='border: {highlight_color} solid 5px'/></td><td>{info_data}</td></div>"
                 images += "</tr>"
         i += 1
 
@@ -240,7 +240,9 @@ def home():
 
     directories = find_latest_event()
 
-    last_event = directories[0]
+    last_event = directories[0] if "event_id" not in request.args else request.args.get("event_id")
+
+    images = dump_images(last_event, None)
 
     i = 0
     recent_events = ""
@@ -250,7 +252,7 @@ def home():
     
 
 
-    return home_template.render(recent_events = recent_events, last_event=last_event)
+    return home_template.render(recent_events = recent_events, last_event=last_event, event_images = images)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
