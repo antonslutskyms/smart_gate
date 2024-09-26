@@ -287,7 +287,7 @@ def home():
         indicator = f"<font style='color: {indicator_color}; font-weight: bold'>{indicator}</font>"
 
         recent_events += f"<td>{indicator}</td>"
-        recent_events += f"<td width='20%'><a href='copilot?event_id={dir}'>{dir}</a></td>"
+        recent_events += f"<td><a href='copilot?event_id={dir}'>{dir}</a></td>"
         
         recent_events += "<td width='50%'>"
         for d in os.listdir(dir):
