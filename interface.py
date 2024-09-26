@@ -259,16 +259,18 @@ def home():
     images = dump_images(last_event, None, show_filename=False, show_info=False)
 
     i = 0
-    recent_events = ""
+    recent_events = "<table>"
     for dir in directories:
+        recent_events += "<tr>"
         info_path = dir.replace("motions", "infos").replace("motion_", "info_")
         info_path = info_path +"/data_actions.json"
         
-        font_style = "bold"
         indicator = "."
         indicator_color = "gray"
 
         print("INfofile: ", info_path)
+
+        
 
         if os.path.isfile(info_path):
             info_js = open(info_path).read()
@@ -281,10 +283,21 @@ def home():
                 indicator_color = "green" if is_gate_open else "false"  
 
 
+
         indicator = f"<font style='color: {indicator_color}'>({indicator})</font>"
 
-        recent_events += f"<br/>{indicator}&nbsp;<a href='copilot?event_id={dir}'>{dir}</a>"
+        recent_events += f"<td>{indicator}&nbsp;<a href='copilot?event_id={dir}'>{dir}</a></td>"
+        
+        recent_events += "<td>"
+        for d in os.listdir(dir):
+            image_path = os.path.join(dir, d)
+            recent_events += f"<img src='{image_path}' height='70px'/>"
 
+        recent_events += "</td>"
+
+        recent_events += "</tr>"
+
+    recent_events += "</table>"
 
     return home_template.render(recent_events = recent_events, last_event=last_event, event_images = images)
 
