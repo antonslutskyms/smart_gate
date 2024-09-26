@@ -46,17 +46,11 @@
                 </td>
 
             </tr>
-            <tr>
-                <td colspan=10 width='100%'>
-                    <h1>Recent Activity</h1>
-                    <div style="overflow-y: scroll; height:400px;">
-                        {{recent_events}}
-                    </div>
-                    <!-- iframe src="/last_event" width='100%' height='3000px' id='last_events'></iframe -->
-                </td>
-            </tr>
         </table>
-        
+        <h1>Recent Activity</h1>
+        <div style="overflow-y: scroll; height:400px;">
+            {{recent_events}}
+        </div>        
         <script language='javascript'>
             function update_current_view(){
                 var url = 'motions/current_frame.png?t=' + new Date().getTime()
