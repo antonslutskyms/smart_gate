@@ -289,7 +289,7 @@ def home():
         recent_events += f"<td>{indicator}</td>"
         recent_events += f"<td><a href='copilot?event_id={dir}'>{dir}</a></td>"
         
-        recent_events += "<td width='70%'>"
+        recent_events += "<td width='80%'>"
         for d in os.listdir(dir):
             image_path = os.path.join(dir, d)
             recent_events += f"<img src='{image_path}' height='70px'/>"
