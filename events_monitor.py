@@ -19,7 +19,7 @@ filter_images_template = env.get_template('filter_images_template.jinja')
 event_analysis_prompt_template = env.get_template('event_analysis_prompt.jinja')
 
 ignore_events_timeout = 60*3
-min_num_pics = 4
+min_num_pics = 2
 
 
 def say_it(text):
