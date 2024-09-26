@@ -267,8 +267,11 @@ def process_event(self, src_path):
     #     print("ERROR: Event processing failed", sys.exc_info()[0])
     # finally:
         #self.event_threads.remove(src_path)
+        
         print(f"~~~~~ Releasing thread: {src_path}. Event Process Time: {int((datetime.datetime.now() - event_process_start_ts).total_seconds())} seconds. ~~~")
         #self.lock.release()
+        color_toggle("red", "off")
+        color_toggle("green", "off")
         
 
 
