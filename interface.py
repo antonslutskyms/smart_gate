@@ -259,7 +259,7 @@ def home():
     images = dump_images(last_event, None, show_filename=False, show_info=False)
 
     i = 0
-    recent_events = "<table width='100%'>"
+    recent_events = "<table width='100%' border=1>"
     for dir in directories:
         recent_events += "<tr>"
         info_path = dir.replace("motions", "infos").replace("motion_", "info_")
