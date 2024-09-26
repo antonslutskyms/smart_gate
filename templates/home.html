@@ -21,9 +21,6 @@
                 <th>
                     <h1>{{last_event}}</h1>
                 </th>
-                <th>
-                    <h1>Recent Events</h1>
-                </th>
             </tr>
             <tr>
                 <td align='center' valign='center' id="current_frame_view"  >
@@ -47,15 +44,15 @@
                         </tr>
                     </table>                
                 </td>
-                <td>
-                    <div style="overflow-y: scroll; height:400px;">
-                        {{recent_events}}
-                    </div>
-                </td>
+
             </tr>
             <tr>
                 <td colspan=10 width='100%'>
-                    <iframe src="/last_event" width='100%' height='3000px' id='last_events'></iframe>
+                    <h1>Recent Activity</h1>
+                    <div style="overflow-y: scroll; height:400px;">
+                        {{recent_events}}
+                    </div>
+                    <!-- iframe src="/last_event" width='100%' height='3000px' id='last_events'></iframe -->
                 </td>
             </tr>
         </table>
@@ -77,7 +74,8 @@
             }
 
             setInterval(update_current_view, 3000);
-            setInterval(function () {document.getElementById("event_current").src = 'motions/event_current.png?t=' + new Date().getTime();}, 5000);
+            //setInterval(function () {document.getElementById("event_current").src = 'motions/event_current.png?t=' + new Date().getTime();}, 5000);
+            setInterval(function () {document.getElementById("event_current").src = 'motions/event_current.png'}, 1000);
             //setInterval(function () {document.getElementById("last_events").contentWindow.location.reload()}, 5000);
         </script>
     </body>
