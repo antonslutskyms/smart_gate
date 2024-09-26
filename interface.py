@@ -265,7 +265,7 @@ def home():
         info_path = dir.replace("motions", "infos").replace("motion_", "info_")
         info_path = info_path +"/data_actions.json"
         
-        indicator = "Low Data"
+        indicator = "Low&nbsp;Data"
         indicator_color = "gray"
 
         print("INfofile: ", info_path)
@@ -284,10 +284,10 @@ def home():
 
 
 
-        indicator = f"<font style='color: {indicator_color}'>({indicator})</font>"
+        indicator = f"<font style='color: {indicator_color}; font-weight: bold'>{indicator}</font>"
 
         recent_events += f"<td>{indicator}</td>"
-        recent_events += f"<td width='10%'><a href='copilot?event_id={dir}'>{dir}</a></td>"
+        recent_events += f"<td width='20%'><a href='copilot?event_id={dir}'>{dir}</a></td>"
         
         recent_events += "<td>"
         for d in os.listdir(dir):
