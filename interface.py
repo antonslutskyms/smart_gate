@@ -259,13 +259,13 @@ def home():
     images = dump_images(last_event, None, show_filename=False, show_info=False)
 
     i = 0
-    recent_events = "<table>"
+    recent_events = "<table width='100%'>"
     for dir in directories:
         recent_events += "<tr>"
         info_path = dir.replace("motions", "infos").replace("motion_", "info_")
         info_path = info_path +"/data_actions.json"
         
-        indicator = "."
+        indicator = "Low Data"
         indicator_color = "gray"
 
         print("INfofile: ", info_path)
@@ -279,14 +279,15 @@ def home():
             info_file = json.loads(info_js)
             if "is_gate_open" in info_file:
                 is_gate_open = info_file["is_gate_open"] 
-                indicator = "+" if is_gate_open else "-"
+                indicator = "Allowed" if is_gate_open else "Denied"
                 indicator_color = "green" if is_gate_open else "false"  
 
 
 
         indicator = f"<font style='color: {indicator_color}'>({indicator})</font>"
 
-        recent_events += f"<td>{indicator}&nbsp;<a href='copilot?event_id={dir}'>{dir}</a></td>"
+        recent_events += f"<td>{indicator}</td>"
+        recent_events += f"<td width='10%'><a href='copilot?event_id={dir}'>{dir}</a></td>"
         
         recent_events += "<td>"
         for d in os.listdir(dir):
