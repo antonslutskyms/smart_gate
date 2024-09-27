@@ -59,14 +59,14 @@ def gate_open():
 #     threading.Thread(target = gate_close).start()
 
 def gate_close():
-    try:
-        print("ATTENTION: GATE CLOSING")
-        act.color_toggle("green", "off")
-        act.color_toggle("red", "on")
-        act.gate_close()
+    #try:
+    print("ATTENTION: GATE CLOSING")
+    act.color_toggle("green", "off")
+    act.color_toggle("red", "on")
+    act.gate_close()
 
-    except:
-        print("WARNING: Unable to close gate")
+    # except:
+    #     print("WARNING: Unable to close gate")
 
 def maybe_act_on_llm_response(llm_response):
     try:
