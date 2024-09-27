@@ -224,13 +224,13 @@ def gate():
             #os.system(f"./open.sh")
             act.color_toggle("red", "off")
             act.color_toggle("green", "on")
-            act.gate_open()
+           # act.gate_open()
         elif "close" == state:
             print("ATTENTION: GATE CLOSING")
             #os.system(f"./close.sh")
             act.color_toggle("green", "off")
             act.color_toggle("red", "on")
-            act.gate_close()
+            #act.gate_close()
     except:
             print("WARNING: Unable to close gate")
 
