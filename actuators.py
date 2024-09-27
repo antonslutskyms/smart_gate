@@ -19,6 +19,7 @@ def color_toggle(color, on_off):
     GPIO.setwarnings(False)
     GPIO.setup(pin,GPIO.OUT)
     GPIO.output(pin,col_out)
+    
     GPIO.cleanup()
 
 

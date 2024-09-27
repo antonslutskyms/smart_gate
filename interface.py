@@ -12,6 +12,8 @@ import os
 import threading
 from jinja2 import Environment, FileSystemLoader
 
+import actuators as act
+
 STATIC = './motions'
 
 app = Flask(__name__, static_folder=STATIC)
@@ -219,11 +221,12 @@ def gate():
     try:
         if "open" == state:            
             print("ATTENTION: GATE OPENING")
-            os.system(f"./open.sh")
-            
+            #os.system(f"./open.sh")
+            act.gate_open()
         elif "close" == state:
             print("ATTENTION: GATE CLOSING")
-            os.system(f"./close.sh")
+            #os.system(f"./close.sh")
+            act.gate_close()
     except:
             print("WARNING: Unable to close gate")
 
