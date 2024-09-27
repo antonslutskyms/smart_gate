@@ -13,7 +13,7 @@ import run_smart_gate as rsg
 
 from jinja2 import Environment, FileSystemLoader
 
-from actuators import color_toggle, gate_open, gate_close
+import actuators as act
 
 env = Environment(loader = FileSystemLoader('templates'))
 
@@ -43,30 +43,30 @@ def play_sound(file = "event_detected.wav"):
 #     except:
 #         print("WARNING: Unable to open gate")
 
-def gate_open():
-    threading.Thread(target = gate_open).start()
+# def gate_open():
+#     threading.Thread(target = gate_open).start()
 
-# def _gate_open():
-#     try:
-#         print("ATTENTION: GATE OPENING")
-#         color_toggle("red", "off")
-#         color_toggle("green", "on")
-#         os.system(f"python3.10 servo3.py 20")
-#     except:
-#         print("WARNING: Unable to open gate")
+def gate_open():
+    try:
+        print("ATTENTION: GATE OPENING")
+        act.color_toggle("red", "off")
+        act.color_toggle("green", "on")
+        act.gate_open()
+    except:
+        print("WARNING: Unable to open gate")
+
+# def gate_close():
+#     threading.Thread(target = gate_close).start()
 
 def gate_close():
-    threading.Thread(target = gate_close).start()
+    try:
+        print("ATTENTION: GATE CLOSING")
+        act.color_toggle("green", "off")
+        act.color_toggle("red", "on")
+        act.gate_close()
 
-# def _gate_close():
-#     try:
-#         print("ATTENTION: GATE CLOSING")
-#         color_toggle("green", "off")
-#         color_toggle("red", "on")
-
-#         os.system(f"python3.10 servo3.py 170")
-#     except:
-#         print("WARNING: Unable to close gate")
+    except:
+        print("WARNING: Unable to close gate")
 
 def maybe_act_on_llm_response(llm_response):
     try:
