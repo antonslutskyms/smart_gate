@@ -221,19 +221,14 @@ def gate():
     try:
         if "open" == state:            
             print("ATTENTION: GATE OPENING")
-            #os.system(f"./open.sh")
-            act.color_toggle("red", "off")
-            act.color_toggle("green", "on")
-           # act.gate_open()
+            os.system(f"./open.sh")
+            
         elif "close" == state:
             print("ATTENTION: GATE CLOSING")
-            #os.system(f"./close.sh")
-            act.color_toggle("green", "off")
-            act.color_toggle("red", "on")
-            #act.gate_close()
+            os.system(f"./close.sh")
     except:
             print("WARNING: Unable to close gate")
-
+    
     return state
 
 @app.route('/last_event')
