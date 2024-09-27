@@ -12,7 +12,6 @@ COLOR_TOGGLE_STATES = {
 }
 
 def color_toggle(color, on_off):
-    print("COLOR TOGGLE !!!!!!!!!!!!!!!!!!!!!!!! ", color)
     pin = COLOR_PINS[color] 
     col_out = COLOR_TOGGLE_STATES[on_off]
 

@@ -47,13 +47,13 @@ def play_sound(file = "event_detected.wav"):
 #     threading.Thread(target = gate_open).start()
 
 def gate_open():
-    try:
-        print("ATTENTION: GATE OPENING")
-        act.color_toggle("red", "off")
-        act.color_toggle("green", "on")
-        act.gate_open()
-    except:
-        print("WARNING: Unable to open gate")
+    #try:
+    print("ATTENTION: GATE OPENING")
+    act.color_toggle("red", "off")
+    act.color_toggle("green", "on")
+    act.gate_open()
+    # except:
+    #     print("WARNING: Unable to open gate")
 
 # def gate_close():
 #     threading.Thread(target = gate_close).start()
