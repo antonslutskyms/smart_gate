@@ -71,9 +71,9 @@
             //setInterval(function () {document.getElementById("event_current").src = 'motions/event_current.png?t=' + new Date().getTime();}, 5000);
             setInterval(function () {
                 try{
-                    print("Reloading current image")
+                    console.log("Reloading current image")
                     document.getElementById("event_current").src = 'motions/event_current.png'
-                    print("Reload done")
+                    console.log("Reload done")
                 }catch (exVar) {
                     console.log("Exception refreshing current image: "+exVar)
                 }
