@@ -69,15 +69,7 @@
 
             setInterval(update_current_view, 3000);
             //setInterval(function () {document.getElementById("event_current").src = 'motions/event_current.png?t=' + new Date().getTime();}, 5000);
-            setInterval(function () {
-                try{
-                    console.log("Reloading current image")
-                    document.getElementById("event_current").src = 'motions/event_current.png'
-                    console.log("Reload done")
-                }catch (exVar) {
-                    console.log("Exception refreshing current image: "+exVar)
-                }
-            }, 1000);
+            setInterval(function () {document.getElementById("event_current").src = 'motions/event_current.png'}, 1000);
             //setInterval(function () {document.getElementById("last_events").contentWindow.location.reload()}, 5000);
         </script>
     </body>

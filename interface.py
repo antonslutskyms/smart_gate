@@ -230,6 +230,8 @@ def gate():
     except:
             print("WARNING: Unable to close gate")
 
+    return state
+
 @app.route('/last_event')
 def last_event():
 
