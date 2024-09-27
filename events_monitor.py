@@ -13,6 +13,8 @@ import run_smart_gate as rsg
 
 from jinja2 import Environment, FileSystemLoader
 
+from actuators import color_toggle, gate_open, gate_close
+
 env = Environment(loader = FileSystemLoader('templates'))
 
 filter_images_template = env.get_template('filter_images_template.jinja')
@@ -34,37 +36,37 @@ def play_sound(file = "event_detected.wav"):
     except:
         print("WARNING: Unable to play sound")
 
-def color_toggle(color, on_off):
-    try:
-        print("ATTENTION: COLOR CHANGING", color, on_off)
-        os.system(f"python3.10 {color}_{on_off}.py")
-    except:
-        print("WARNING: Unable to open gate")
+# def color_toggle(color, on_off):
+#     try:
+#         print("ATTENTION: COLOR CHANGING", color, on_off)
+#         os.system(f"python3.10 {color}_{on_off}.py")
+#     except:
+#         print("WARNING: Unable to open gate")
 
 def gate_open():
-    threading.Thread(target = _gate_open).start()
+    threading.Thread(target = gate_open).start()
 
-def _gate_open():
-    try:
-        print("ATTENTION: GATE OPENING")
-        color_toggle("red", "off")
-        color_toggle("green", "on")
-        os.system(f"python3.10 servo3.py 20")
-    except:
-        print("WARNING: Unable to open gate")
+# def _gate_open():
+#     try:
+#         print("ATTENTION: GATE OPENING")
+#         color_toggle("red", "off")
+#         color_toggle("green", "on")
+#         os.system(f"python3.10 servo3.py 20")
+#     except:
+#         print("WARNING: Unable to open gate")
 
 def gate_close():
-    threading.Thread(target = _gate_close).start()
+    threading.Thread(target = gate_close).start()
 
-def _gate_close():
-    try:
-        print("ATTENTION: GATE CLOSING")
-        color_toggle("green", "off")
-        color_toggle("red", "on")
+# def _gate_close():
+#     try:
+#         print("ATTENTION: GATE CLOSING")
+#         color_toggle("green", "off")
+#         color_toggle("red", "on")
 
-        os.system(f"python3.10 servo3.py 170")
-    except:
-        print("WARNING: Unable to close gate")
+#         os.system(f"python3.10 servo3.py 170")
+#     except:
+#         print("WARNING: Unable to close gate")
 
 def maybe_act_on_llm_response(llm_response):
     try:
