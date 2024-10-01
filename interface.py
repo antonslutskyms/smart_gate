@@ -318,16 +318,16 @@ def home():
         recent_events += f"<td>{indicator}</td>"
         recent_events += f"<td><a href='copilot?event_id={dir}'>{dir}</a></td>"
         
-        recent_events += "<td width='80%'>"
+        recent_events += "<td width='60%'>"
         for d in os.listdir(dir):
             image_path = os.path.join(dir, d)
             recent_events += f"<img src='{image_path}' height='70px'/>"
 
         recent_events += "</td>"
-        recent_events += f"<td>{time_to_action}</td>"
-        recent_events += f"<td>{llm_filtering_time}</td>"
-        recent_events += f"<td>{llm_response_time}</td>"
-        recent_events += f"<td>{event_data_collection_time}</td>"
+        recent_events += f"<td>{round(time_to_action)}</td>"
+        recent_events += f"<td>{round(llm_filtering_time)}</td>"
+        recent_events += f"<td>{round(llm_response_time)}</td>"
+        recent_events += f"<td>{round(event_data_collection_time)}</td>"
 
         recent_events += "</tr>"
 
