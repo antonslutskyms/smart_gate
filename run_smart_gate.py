@@ -155,8 +155,8 @@ def llm_task_phi3(user_prompt, image_urls, system_prompt):
     
     response = phi35_client.complete(
                         messages=[
-                            SystemMessage(content = content),
-                            #SystemMessage(content = [TextContentItem(text="You are a useful AI bot that analyzes images.")]),
+                            #SystemMessage(content = content),
+                            SystemMessage(content = [TextContentItem(text=system_prompt)]),
                             UserMessage(content=content),
                         ],
                         temperature=0,
