@@ -172,7 +172,7 @@ def llm_task(user_prompt, image_urls, system_prompt):
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print(f"~~~~~~~~~~ END LLM TASK [{llm_time}s] ~~~~~~~~~~~~~~~")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    return fixed_json
+    return fixed_json, llm_time
 
 
 if __name__ == "__main__":

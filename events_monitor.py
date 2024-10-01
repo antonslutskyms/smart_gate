@@ -156,32 +156,26 @@ def process_event(self, src_path):
             event_process_start_ts = datetime.datetime.now()
             
             events_root_dir = src_path
-
-            llm_filtering_start_ts = datetime.datetime.now()
             
             events_root_dir_list = os.listdir(events_root_dir)
 
             images_filter = [i for i in range(len(events_root_dir_list))]
 
+            llm_filtering_time = -1
+
             if True:
-                #try:
+
                 analysis_prompt = filter_images_template.render()
-                llm_response = llm_analyze_event_images(analysis_prompt, events_root_dir)
+                llm_response, llm_filtering_time = llm_analyze_event_images(analysis_prompt, events_root_dir)
                 print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
 
                 images_filter = json.loads(llm_response)
 
                 best_pic_str = " ".join([str(i) for i in images_filter])
 
-                #say_it
                 print(f"Best pics are {best_pic_str} images.")
 
                 print(f"[IMAGE FILTER] filter: {images_filter}")
-                # except:
-                #     print("WARNING: Failed to get filtered images!", sys.exc_info()[0])
-                #     say_it("Warning! Error filtering images.")
-
-                llm_filtering_time = int((datetime.datetime.now() - llm_filtering_start_ts).total_seconds())
 
                 print(f"DATA: Filter {llm_filtering_time} seconds.")
 
@@ -211,7 +205,7 @@ def process_event(self, src_path):
 
                 print(f"---- User Prompt:\n{prompt}\n----")
 
-                llm_response = rsg.llm_task(user_prompt = prompt, 
+                llm_response, llm_response_time = rsg.llm_task(user_prompt = prompt, 
                         system_prompt=event_analysis_prompt, 
                         image_urls = image_urls)
 
@@ -219,8 +213,10 @@ def process_event(self, src_path):
 
                 #say_it(llm_response_descr)
 
+                time_to_action = (datetime.datetime.now() - event_process_start_ts).total_seconds()
+
                 print("_____________________________________________________________________________________________")
-                print(f"__________ TIME TO ACTION: {(datetime.datetime.now() - event_process_start_ts).total_seconds()} seconds. __________")
+                print(f"__________ TIME TO ACTION: {time_to_action} seconds. __________")
                 print("_____________________________________________________________________________________________")
 
                 is_gate_open = maybe_act_on_llm_response(llm_response)
@@ -232,7 +228,10 @@ def process_event(self, src_path):
                 open(info_path, "w").write(json.dumps({ "unfiltered_data_actions" : all_data_actions, 
                                                         "filtered_data_actions" : data_actions,
                                                         "llm_response" : llm_response,
-                                                        "is_gate_open" : is_gate_open
+                                                        "is_gate_open" : is_gate_open,
+                                                        "time_to_action" : time_to_action,
+                                                        "llm_filtering_time" : llm_filtering_time,
+                                                        "llm_response_time" : llm_response_time
                                                         }))
 
                 print("\n\n----------------- Sleeping for time to skip subsequent events ------------\n\n")
