@@ -26,8 +26,8 @@ from azure.ai.inference.models import SystemMessage, UserMessage
 from azure.ai.inference.models import TextContentItem, ImageContentItem, ImageUrl
 
 phi35_client = ChatCompletionsClient(
-    endpoint=os.environ["PHI35_VISION_ENDPOINT="],
-    credential=AzureKeyCredential(os.environ["PHI35_VISION_KEY="]),
+    endpoint=os.environ["PHI35_VISION_ENDPOINT"],
+    credential=AzureKeyCredential(os.environ["PHI35_VISION_KEY"]),
 )
 
 
