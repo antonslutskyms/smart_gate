@@ -155,7 +155,7 @@ def llm_task_phi3(user_prompt, image_urls, system_prompt):
                         max_tokens=2048,
                 )
     
-    return response
+    return json.dumps(response)
 
 
 def llm_task(user_prompt, image_urls, system_prompt):    
