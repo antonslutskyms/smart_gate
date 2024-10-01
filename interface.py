@@ -296,7 +296,7 @@ def home():
             info_js = open(info_path).read()
             print("JSON: ", info_js)
 
-            info_file = json.loads(info_js)
+            info_file = json.loads(info_js)[0]
             if "is_gate_open" in info_file:
                 is_gate_open = info_file["is_gate_open"] 
                 indicator = "Allowed" if is_gate_open else "Denied"
