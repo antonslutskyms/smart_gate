@@ -225,14 +225,16 @@ def process_event(self, src_path):
                 info_path = src_path.replace("motions", "infos").replace("motion_", "info_")
                 info_path = info_path +"/data_actions.json"
 
-                open(info_path, "w").write(json.dumps({ "unfiltered_data_actions" : all_data_actions, 
+                response_info = { "unfiltered_data_actions" : all_data_actions, 
                                                         "filtered_data_actions" : data_actions,
                                                         "llm_response" : llm_response,
                                                         "is_gate_open" : is_gate_open,
                                                         "time_to_action" : time_to_action,
                                                         "llm_filtering_time" : llm_filtering_time,
                                                         "llm_response_time" : llm_response_time
-                                                        }))
+                                                        }
+
+                open(info_path, "w").write(json.dumps(response_info))
 
                 print("\n\n----------------- Sleeping for time to skip subsequent events ------------\n\n")
                 
