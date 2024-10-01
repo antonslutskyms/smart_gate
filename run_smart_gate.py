@@ -135,6 +135,8 @@ def render_prompt(data_actions, images_root_dir = "cat_pics"):
 
 def llm_task_phi3(user_prompt, image_urls, system_prompt):  
 
+    
+
     content = [
         TextContentItem(text=system_prompt)
     ]
@@ -145,6 +147,9 @@ def llm_task_phi3(user_prompt, image_urls, system_prompt):
     print("System Prompt:", system_prompt)
     print("User Content: ", len(content))
 
+
+    llm_start_ts = datetime.datetime.now()
+    
     response = phi35_client.complete(
                         messages=[
                             #SystemMessage(content = [TextContentItem(text=system_prompt)]),
@@ -155,7 +160,9 @@ def llm_task_phi3(user_prompt, image_urls, system_prompt):
                         max_tokens=2048,
                 )
     
-    return response.choices[0].message.content
+    llm_time = int((datetime.datetime.now() - llm_start_ts).total_seconds())
+    
+    return response.choices[0].message.content, llm_time
 
 
 def llm_task(user_prompt, image_urls, system_prompt):    

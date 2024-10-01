@@ -96,7 +96,7 @@ def call_copilot():
     print(prompt, len(image_urls))
     print("==========================================")
     
-    llm_response = rsg.llm_task_phi3(user_prompt = prompt, 
+    llm_response, llm_time = rsg.llm_task_phi3(user_prompt = prompt, 
                 system_prompt=_system_prompt, 
                 image_urls = image_urls)
 
@@ -113,7 +113,7 @@ def call_copilot():
 
     print("============== RESULT ================")
     print(response)
-    print("============== RESULT ================")
+    print(f"============== RESULT (in {llm_time}s) ================")
 
 
 
