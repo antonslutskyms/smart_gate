@@ -324,7 +324,7 @@ def home():
         recent_events += f"<td><a href='copilot?event_id={dir}'>{dir}</a></td>"
 
         recent_events += "<td width='40%'>"
-        for image_path in os.listdir():
+        for image_path in os.listdir(dir):
             print("==============!!!!!!!!!!!!========== ",image_path )
             if image_path.startswith("event_"):
                 print("?????????????????? ", image_path)
