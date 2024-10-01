@@ -291,6 +291,8 @@ def home():
         llm_response_time = -1
         event_data_collection_time = -1
         
+        filtered_data_actions = []
+        unfiltered_data_actions = []
 
 
         if os.path.isfile(info_path):
@@ -310,6 +312,8 @@ def home():
                 llm_filtering_time = info_file.get("llm_filtering_time", -1)
                 llm_response_time = info_file.get("llm_response_time", -1)
                 event_data_collection_time = info_file.get("event_data_collection_time", -1)
+                unfiltered_data_actions = info_file.get("unfiltered_data_actions", [])
+                filtered_data_actions = info_file.get("filtered_data_actions", [])
             except:
                 print("Info structure unsupported: ", info_path, info_js)
 
@@ -319,9 +323,9 @@ def home():
         recent_events += f"<td><a href='copilot?event_id={dir}'>{dir}</a></td>"
         
         recent_events += "<td width='80%'>"
-        for d in os.listdir(dir):
-            image_path = os.path.join(dir, d)
-            recent_events += f"<img src='{image_path}' height='70px'/>"
+        for image_path in unfiltered_data_actions:
+            border_color = "red" if image_path in filtered_data_actions else "gray"
+            recent_events += f"<img style='border:3px {border_color} solid' src='{image_path}' height='70px'/>"
 
         recent_events += "</td>"
         recent_events += f"<td align='center' valign='center'>{round(time_to_action)}</td>"
