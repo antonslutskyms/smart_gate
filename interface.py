@@ -325,7 +325,7 @@ def home():
         recent_events += "<td width='80%'>"
         for image_path in unfiltered_data_actions:
             border_color = "red" if image_path in filtered_data_actions else "gray"
-            img_src = image_path["path"]
+            img_src = os.path.join(dir, image_path["path"])
             print("Img Src: ", img_src)
             recent_events += f"<img style='border:3px {border_color} solid' src='{img_src}' height='70px'/>\n"
 
