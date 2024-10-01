@@ -17,6 +17,19 @@ import datetime
 
 from jinja2 import Environment, FileSystemLoader
 
+from azure.ai.inference import ChatCompletionsClient
+from azure.core.credentials import AzureKeyCredential
+
+from azure.ai.inference.models import SystemMessage, UserMessage
+
+
+from azure.ai.inference.models import TextContentItem, ImageContentItem, ImageUrl
+
+phi35_client = ChatCompletionsClient(
+    endpoint=os.environ["PHI35_VISION_ENDPOINT="],
+    credential=AzureKeyCredential(os.environ["PHI35_VISION_KEY="]),
+)
+
 
 
 
@@ -119,6 +132,28 @@ def render_prompt(data_actions, images_root_dir = "cat_pics"):
 
     prompt = template.render(data = data_actions)
     return prompt, images_urls
+
+def llm_task_phi3(user_prompt, image_urls, system_prompt):  
+
+    content = [
+        TextContentItem(text=user_prompt)
+    ]
+
+    for image_url in image_urls:
+        content.append(ImageContentItem(image=ImageUrl(url=image_url)))
+
+    response = client.complete(
+                        messages=[
+                            SystemMessage(system_prompt),
+                            UserMessage(content=content),
+                        ],
+                        temperature=0,
+                        top_p=1,
+                        max_tokens=2048,
+                )
+    
+    return response
+
 
 def llm_task(user_prompt, image_urls, system_prompt):    
     
