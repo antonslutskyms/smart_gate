@@ -263,7 +263,7 @@ def home():
     images = dump_images(last_event, None, show_filename=False, show_info=False)
 
     i = 0
-    recent_events = "<table width='100%' border=1 align='center' valign='middle'>"
+    recent_events = "<table width='100%' border=1>"
 
     recent_events += "<tr>"
     recent_events += f"<th>Status</th>"
@@ -324,10 +324,10 @@ def home():
             recent_events += f"<img src='{image_path}' height='70px'/>"
 
         recent_events += "</td>"
-        recent_events += f"<td>{round(time_to_action)}</td>"
-        recent_events += f"<td>{round(llm_filtering_time)}</td>"
-        recent_events += f"<td>{round(llm_response_time)}</td>"
-        recent_events += f"<td>{round(event_data_collection_time)}</td>"
+        recent_events += f"<td align='center' valign='center'>{round(time_to_action)}</td>"
+        recent_events += f"<td align='center' valign='center'>{round(llm_filtering_time)}</td>"
+        recent_events += f"<td align='center' valign='center'>{round(llm_response_time)}</td>"
+        recent_events += f"<td align='center' valign='center'>{round(event_data_collection_time)}</td>"
 
         recent_events += "</tr>"
 
