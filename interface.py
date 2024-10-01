@@ -325,9 +325,10 @@ def home():
 
         recent_events += "<td width='40%'>"
         for image_path in os.listdir():
-            img_src = os.path.join(dir, image_path)
-            print("Img Src: ", img_src)
-            recent_events += f"<img style='border:3px black solid' src='{img_src}' height='70px'/>\n"
+            if image_path.startswith("event_"):
+                img_src = os.path.join(dir, image_path)
+                print("Img Src: ", img_src)
+                recent_events += f"<img style='border:3px black solid' src='{img_src}' height='70px'/>\n"
 
         recent_events += "</td>"
 
