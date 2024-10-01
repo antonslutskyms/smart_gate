@@ -141,10 +141,12 @@ def llm_task_phi3(user_prompt, image_urls, system_prompt):
         
     ]
     
+    content.append(TextContentItem(text=system_prompt))
+
     for image_url in image_urls:
         content.append(ImageContentItem(image_url = ImageUrl(url=image_url)))
 
-    #content.append(TextContentItem(text=system_prompt))
+    
 
 
     print("System Prompt:", system_prompt)
@@ -156,7 +158,7 @@ def llm_task_phi3(user_prompt, image_urls, system_prompt):
     response = phi35_client.complete(
                         messages=[
                             #SystemMessage(content = content),
-                            SystemMessage(content = [TextContentItem(text=system_prompt)]),
+                            #SystemMessage(content = [TextContentItem(text=system_prompt)]),
                             UserMessage(content=content),
                         ],
                         temperature=0,
