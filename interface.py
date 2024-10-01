@@ -269,6 +269,7 @@ def home():
     recent_events += f"<th>Status</th>"
     recent_events += f"<th>Event ID</th>"
     recent_events += f"<th>Event Data</th>"
+    recent_events += f"<th>Target</th>"
     recent_events += f"<th>TTA</th>"
     recent_events += f"<th>FT</th>"
     recent_events += f"<th>RT</th>"
@@ -321,8 +322,17 @@ def home():
 
         recent_events += f"<td>{indicator}</td>"
         recent_events += f"<td><a href='copilot?event_id={dir}'>{dir}</a></td>"
-        
-        recent_events += "<td width='80%'>"
+
+        recent_events += "<td width='40%'>"
+        for image_path in os.listdir():
+            img_src = os.path.join(dir, image_path)
+            print("Img Src: ", img_src)
+            recent_events += f"<img style='border:3px black solid' src='{img_src}' height='70px'/>\n"
+
+        recent_events += "</td>"
+
+
+        recent_events += "<td width='40%'>"
         for image_path in unfiltered_data_actions:
             border_color = "red" if image_path in filtered_data_actions else "gray"
             img_src = os.path.join(dir, image_path["path"])
