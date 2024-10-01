@@ -303,9 +303,9 @@ def home():
                 indicator_color = "green" if is_gate_open else "false"  
 
             time_to_action = info_file.get("time_to_action", -1)
-            llm_filtering_time = info_js.get("llm_filtering_time", -1)
-            llm_response_time = -info_js.get("llm_response_time", -1)
-            event_data_collection_time = info_js.get("event_data_collection_time", -1)
+            llm_filtering_time = info_file.get("llm_filtering_time", -1)
+            llm_response_time = info_file.get("llm_response_time", -1)
+            event_data_collection_time = info_file.get("event_data_collection_time", -1)
 
 
 
