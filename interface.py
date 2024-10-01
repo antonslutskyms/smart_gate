@@ -264,6 +264,18 @@ def home():
 
     i = 0
     recent_events = "<table width='100%' border=1>"
+
+    recent_events += "<tr>"
+    recent_events += f"<th>Status</th>"
+    recent_events += f"<th>Event ID</th>"
+    recent_events += f"<th>Event Data</th>"
+    recent_events += f"<th>TTA</th>"
+    recent_events += f"<th>FT</th>"
+    recent_events += f"<th>RT</th>"
+    recent_events += f"<th>DC</th>"
+    recent_events += "</tr>"
+
+
     for dir in directories:
         recent_events += "<tr>"
         info_path = dir.replace("motions", "infos").replace("motion_", "info_")
@@ -274,6 +286,10 @@ def home():
 
         print("INfofile: ", info_path)
 
+        time_to_action = -1
+        llm_filtering_time = -1
+        llm_response_time = -1
+        event_data_collection_time = -1
         
 
         if os.path.isfile(info_path):
@@ -285,6 +301,11 @@ def home():
                 is_gate_open = info_file["is_gate_open"] 
                 indicator = "Allowed" if is_gate_open else "Denied"
                 indicator_color = "green" if is_gate_open else "false"  
+
+            time_to_action = info_js.get("time_to_action", -1)
+            llm_filtering_time = info_js.get("llm_filtering_time", -1)
+            llm_response_time = -info_js.get("llm_response_time", -1)
+            event_data_collection_time = info_js.get("event_data_collection_time", -1)
 
 
 
@@ -299,6 +320,10 @@ def home():
             recent_events += f"<img src='{image_path}' height='70px'/>"
 
         recent_events += "</td>"
+        recent_events += f"<td>{time_to_action}</td>"
+        recent_events += f"<td>{llm_filtering_time}</td>"
+        recent_events += f"<td>{llm_response_time}</td>"
+        recent_events += f"<td>{event_data_collection_time}</td>"
 
         recent_events += "</tr>"
 
