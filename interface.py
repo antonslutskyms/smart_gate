@@ -263,7 +263,7 @@ def home():
     images = dump_images(last_event, None, show_filename=False, show_info=False)
 
     i = 0
-    recent_events = "<table width='100%' border=1>"
+    recent_events = "<table width='100%' border=1 align='center' valign='middle'>"
 
     recent_events += "<tr>"
     recent_events += f"<th>Status</th>"
@@ -318,7 +318,7 @@ def home():
         recent_events += f"<td>{indicator}</td>"
         recent_events += f"<td><a href='copilot?event_id={dir}'>{dir}</a></td>"
         
-        recent_events += "<td width='60%'>"
+        recent_events += "<td width='80%'>"
         for d in os.listdir(dir):
             image_path = os.path.join(dir, d)
             recent_events += f"<img src='{image_path}' height='70px'/>"
