@@ -161,7 +161,7 @@ def llm_task_phi3(user_prompt, image_urls, system_prompt):
                         ],
                         temperature=0,
                         top_p=1,
-                        max_tokens=2048,
+                        max_tokens=4096,
                 )
     
     llm_time = int((datetime.datetime.now() - llm_start_ts).total_seconds())
