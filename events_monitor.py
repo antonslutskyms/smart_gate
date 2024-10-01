@@ -234,6 +234,8 @@ def process_event(self, src_path):
                                                         "llm_response_time" : llm_response_time
                                                         }
 
+                print(f"-------- Response Info:\n{response_info}\n---------")
+
                 open(info_path, "w").write(json.dumps(response_info))
 
                 print("\n\n----------------- Sleeping for time to skip subsequent events ------------\n\n")
