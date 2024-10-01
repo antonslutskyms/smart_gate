@@ -158,7 +158,7 @@ def llm_task_phi3(user_prompt, image_urls, system_prompt):
                             #SystemMessage(content = [TextContentItem(text="You are a useful AI bot that analyzes images.")]),
                             UserMessage(content=content),
                         ],
-                        temperature=1,
+                        temperature=0,
                         top_p=1,
                         max_tokens=2048,
                 )
