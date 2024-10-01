@@ -153,7 +153,8 @@ def copilot():
     images = dump_images(latest_event, image_filter, filtered_images)
 
     copilot_html = copilot_template.render(latest_event = latest_event, 
-                                            system_prompt=system_prompt,
+                                            image_filter_prompt=image_filter_prompt,
+                                            event_analysis_prompt=event_analysis_prompt,
                                             images = images,
                                             data_info = data_info)
 
