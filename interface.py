@@ -147,6 +147,9 @@ def copilot():
 
     filtered_images = [d["path"] for d in data_info["filtered_data_actions"]] if data_info else []
 
+    image_filter_prompt = data_info["image_filter_prompt"]
+    event_analysis_prompt = data_info["event_analysis_prompt"]
+
     images = dump_images(latest_event, image_filter, filtered_images)
 
     copilot_html = copilot_template.render(latest_event = latest_event, 

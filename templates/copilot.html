@@ -1,19 +1,21 @@
 <html>
     <head>
         <script language="javascript">
-            function call_copilot(){
+            function call_copilot(target_prompt){
                     
                     const apiUrl = '/call_copilot';
+
+                    var target_btn = target_prompt+"_btn";
         
-                    document.getElementById("system_prompt").disabled = true;
-                    document.getElementById("call_copilot").disabled = true;
+                    document.getElementById(target_prompt).disabled = true;
+                    document.getElementById(target_btn).disabled = true;
                     fetch(apiUrl,{
                                     method: "POST",
                                     headers: {
                                         "Content-Type": "application/json"
                                     },
                                     body: JSON.stringify({
-                                        prompt: document.getElementById("system_prompt").value,
+                                        prompt: document.getElementById(target_prompt).value,
                                         event_id: "{{latest_event}}"
                                     })
                                 })
@@ -27,17 +29,16 @@
                         console.log(data);
                         //document.getElementById("llm_response").innerHTML = JSON.stringify(data)
         
-                        var combined_prompt = document.getElementById("system_prompt").value.trim();
+                        var combined_prompt = document.getElementById(target_prompt).value.trim();
                         combined_prompt = combined_prompt + '\n\n'+JSON.stringify(data)+'\n\n';
                         console.log(combined_prompt);
         
-                        document.getElementById("system_prompt")
-                        document.getElementById("system_prompt").value = combined_prompt;
+                        document.getElementById(target_prompt).value = combined_prompt;
         
                         // document.getElementById("say_it").src = 'motions/latest.wav?t=' + new Date().getTime();
                         // document.getElementById("say_it").play();
-                        document.getElementById("call_copilot").disabled = false;
-                        document.getElementById("system_prompt").disabled = false;
+                        document.getElementById(target_btn).disabled = false;
+                        document.getElementById(target_prompt).disabled = false;
         
                     })
                     .catch(error => {
@@ -45,6 +46,14 @@
                         //document.getElementById("llm_response").innerHTML = '<b>Error: '+error+'</b>'
                     });
                 }
+
+            function filter_images(){
+                call_copilot("image_filter_prompt");
+            }
+
+            function analyze_target(){
+                call_copilot("event_analysis_prompt");
+            }
         </script>
     </head>
     <body>
@@ -70,8 +79,11 @@
             </tr>
             <tr>
                 <td width="20%">
-                    <textarea cols='70' rows='15' id='system_prompt'>{{system_prompt}}</textarea>
-                    <input type='button' id='call_copilot' value='Submit' style='height:50px;width:200px' onclick='call_copilot()'/>
+                    <textarea cols='70' rows='15' id='image_filter_prompt'>{{image_filter_prompt}}</textarea>
+                    <input type='button' id="image_filter_prompt_btn" value='Submit' style='height:50px;width:200px' onclick='filter_images()'/>
+                    <br/>
+                    <textarea cols='70' rows='15' id='event_analysis_prompt'>{{event_analysis_prompt}}</textarea>
+                    <input type='button' id="event_analysis_prompt_btn" value='Submit' style='height:50px;width:200px' onclick='analyze_target()'/>
                 </td>
                 <td width="50%">
                     {{images}}
