@@ -152,8 +152,9 @@ def llm_task_phi3(user_prompt, image_urls, system_prompt):
     
     response = phi35_client.complete(
                         messages=[
+                            SystemMessage(content = content),
                             #SystemMessage(content = [TextContentItem(text=system_prompt)]),
-                            UserMessage(content=content),
+                            #UserMessage(content=content),
                         ],
                         temperature=0,
                         top_p=1,
