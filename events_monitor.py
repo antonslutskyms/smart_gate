@@ -142,7 +142,10 @@ def process_event(self, src_path):
             print(f"Processing event: {src_path} events: {self.event_threads}")
 
             t = 7
-            print("Observing gate for....")        
+            print("Observing gate for....")      
+            
+            event_data_collection_start = datetime.datetime.now()  
+            
             for i in range(t):
                 print(f"{i} of {t} s")
                 time.sleep(1)
@@ -155,6 +158,8 @@ def process_event(self, src_path):
                 
             event_process_start_ts = datetime.datetime.now()
             
+            event_data_collection_time = (event_process_start_ts - event_data_collection_start).total_seconds()
+
             events_root_dir = src_path
             
             events_root_dir_list = os.listdir(events_root_dir)
@@ -231,7 +236,8 @@ def process_event(self, src_path):
                                                         "is_gate_open" : is_gate_open,
                                                         "time_to_action" : time_to_action,
                                                         "llm_filtering_time" : llm_filtering_time,
-                                                        "llm_response_time" : llm_response_time
+                                                        "llm_response_time" : llm_response_time,
+                                                        "event_data_collection_time" : event_data_collection_time
                                                         }
 
                 print(f"-------- Response Info:\n{response_info}\n---------")
