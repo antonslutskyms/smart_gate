@@ -292,24 +292,26 @@ def home():
         event_data_collection_time = -1
         
 
+
         if os.path.isfile(info_path):
             info_js = open(info_path).read()
             print("JSON: ", info_js)
 
-            info_file = json.loads(info_js)
-            print("Info file: ", info_file)
+            try:
+                info_file = json.loads(info_js)
+                print("Info file: ", info_file)
 
-            if "is_gate_open" in info_file:
-                is_gate_open = info_file["is_gate_open"] 
-                indicator = "Allowed" if is_gate_open else "Denied"
-                indicator_color = "green" if is_gate_open else "false"  
+                if "is_gate_open" in info_file:
+                    is_gate_open = info_file["is_gate_open"] 
+                    indicator = "Allowed" if is_gate_open else "Denied"
+                    indicator_color = "green" if is_gate_open else "false"  
 
-            time_to_action = info_file.get("time_to_action", -1)
-            llm_filtering_time = info_file.get("llm_filtering_time", -1)
-            llm_response_time = info_file.get("llm_response_time", -1)
-            event_data_collection_time = info_file.get("event_data_collection_time", -1)
-
-
+                time_to_action = info_file.get("time_to_action", -1)
+                llm_filtering_time = info_file.get("llm_filtering_time", -1)
+                llm_response_time = info_file.get("llm_response_time", -1)
+                event_data_collection_time = info_file.get("event_data_collection_time", -1)
+            except:
+                print("Info structure unsupported: ", info_path, info_js)
 
         indicator = f"<font style='color: {indicator_color}; font-weight: bold'>{indicator}</font>"
 
