@@ -168,9 +168,13 @@ def process_event(self, src_path):
 
             llm_filtering_time = -1
 
+            image_filter_prompt = None
+
             if True:
 
                 analysis_prompt = filter_images_template.render()
+                image_filter_prompt = analysis_prompt
+
                 llm_response, llm_filtering_time = llm_analyze_event_images(analysis_prompt, events_root_dir)
                 print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
 
@@ -237,7 +241,10 @@ def process_event(self, src_path):
                                                         "time_to_action" : time_to_action,
                                                         "llm_filtering_time" : llm_filtering_time,
                                                         "llm_response_time" : llm_response_time,
-                                                        "event_data_collection_time" : event_data_collection_time
+                                                        "event_data_collection_time" : event_data_collection_time,
+                                                        "image_filter_prompt" : image_filter_prompt,
+                                                        "event_analysis_prompt" : event_analysis_prompt
+
                                                         }
 
                 print(f"-------- Response Info:\n{response_info}\n---------")
