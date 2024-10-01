@@ -143,7 +143,7 @@ def llm_task_phi3(user_prompt, image_urls, system_prompt):
         content.append(ImageContentItem(image_url = ImageUrl(url=image_url)))
 
     print("System Prompt:", system_prompt)
-    print("User Content: ", content)
+    print("User Content: ", len(content))
 
     response = phi35_client.complete(
                         messages=[
