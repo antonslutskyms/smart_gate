@@ -136,7 +136,7 @@ def render_prompt(data_actions, images_root_dir = "cat_pics"):
 def llm_task_phi3(user_prompt, image_urls, system_prompt):  
 
     content = [
-        #TextContentItem(text=user_prompt)
+        TextContentItem(text=system_prompt)
     ]
 
     for image_url in image_urls:
@@ -147,7 +147,7 @@ def llm_task_phi3(user_prompt, image_urls, system_prompt):
 
     response = phi35_client.complete(
                         messages=[
-                            SystemMessage(content = [TextContentItem(text=system_prompt)]),
+                            #SystemMessage(content = [TextContentItem(text=system_prompt)]),
                             UserMessage(content=content),
                         ],
                         temperature=0,
