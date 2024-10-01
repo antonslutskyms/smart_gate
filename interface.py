@@ -273,7 +273,7 @@ def home():
     recent_events += f"<th>FT</th>"
     recent_events += f"<th>RT</th>"
     recent_events += f"<th>DC</th>"
-    recent_events += "</tr>"
+    recent_events += "</tr>\n"
 
 
     for dir in directories:
@@ -325,7 +325,7 @@ def home():
         recent_events += "<td width='80%'>"
         for image_path in unfiltered_data_actions:
             border_color = "red" if image_path in filtered_data_actions else "gray"
-            recent_events += f"<img style='border:3px {border_color} solid' src='{image_path}' height='70px'/>"
+            recent_events += f"<img style='border:3px {border_color} solid' src='{image_path}' height='70px'/>\n"
 
         recent_events += "</td>"
         recent_events += f"<td align='center' valign='center'>{round(time_to_action)}</td>"
@@ -333,7 +333,7 @@ def home():
         recent_events += f"<td align='center' valign='center'>{round(llm_response_time)}</td>"
         recent_events += f"<td align='center' valign='center'>{round(event_data_collection_time)}</td>"
 
-        recent_events += "</tr>"
+        recent_events += "</tr>\n"
 
     recent_events += "</table>"
 
