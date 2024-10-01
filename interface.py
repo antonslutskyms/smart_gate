@@ -296,13 +296,13 @@ def home():
             info_js = open(info_path).read()
             print("JSON: ", info_js)
 
-            info_file = json.loads(info_js)[0]
+            info_file = json.loads(info_js)
+            print("Info file: ", info_file)
+
             if "is_gate_open" in info_file:
                 is_gate_open = info_file["is_gate_open"] 
                 indicator = "Allowed" if is_gate_open else "Denied"
                 indicator_color = "green" if is_gate_open else "false"  
-
-            print("Info file: ", info_file)
 
             time_to_action = info_file.get("time_to_action", -1)
             llm_filtering_time = info_file.get("llm_filtering_time", -1)
