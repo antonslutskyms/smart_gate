@@ -140,12 +140,12 @@ def llm_task_phi3(user_prompt, image_urls, system_prompt):
     content = [
         
     ]
-    content.append(TextContentItem(text=system_prompt))
-
+    
     for image_url in image_urls:
         content.append(ImageContentItem(image_url = ImageUrl(url=image_url)))
 
-    
+    #content.append(TextContentItem(text=system_prompt))
+
 
     print("System Prompt:", system_prompt)
     print("User Content: ", len(content))
@@ -155,7 +155,7 @@ def llm_task_phi3(user_prompt, image_urls, system_prompt):
     
     response = phi35_client.complete(
                         messages=[
-                            #SystemMessage(content = content),
+                            SystemMessage(content = content),
                             #SystemMessage(content = [TextContentItem(text="You are a useful AI bot that analyzes images.")]),
                             UserMessage(content=content),
                         ],
