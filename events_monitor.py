@@ -172,21 +172,25 @@ def process_event(self, src_path):
 
             if True:
 
+                
                 analysis_prompt = filter_images_template.render()
                 image_filter_prompt = analysis_prompt
 
                 llm_response, llm_filtering_time = llm_analyze_event_images(analysis_prompt, events_root_dir)
                 print(f"[IMAGE FILTER] LLM Response:\n{llm_response}")
 
-                images_filter = json.loads(llm_response)
+                try:
+                    images_filter = json.loads(llm_response)
 
-                best_pic_str = " ".join([str(i) for i in images_filter])
+                    best_pic_str = " ".join([str(i) for i in images_filter])
 
-                print(f"Best pics are {best_pic_str} images.")
+                    print(f"Best pics are {best_pic_str} images.")
 
-                print(f"[IMAGE FILTER] filter: {images_filter}")
+                    print(f"[IMAGE FILTER] filter: {images_filter}")
 
-                print(f"DATA: Filter {llm_filtering_time} seconds.")
+                    print(f"DATA: Filter {llm_filtering_time} seconds.")
+                except:
+                    print("Filter LLM response not understood: ", llm_response)
 
             if images_filter:
                 
