@@ -281,7 +281,7 @@ def home():
     recent_events += "</tr>\n"
 
 
-    for dir in directories:
+    for dir in directories[:20]:
         recent_events += "<tr>"
         info_path = dir.replace("motions", "infos").replace("motion_", "info_")
         info_path = info_path +"/data_actions.json"
