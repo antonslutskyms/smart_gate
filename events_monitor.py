@@ -222,7 +222,7 @@ def process_event(self, src_path):
 
                 #say_it(llm_response_descr)
 
-                time_to_action = (datetime.datetime.now() - event_process_start_ts).total_seconds()
+                time_to_action = (datetime.datetime.now() - event_data_collection_start).total_seconds()
 
                 print("_____________________________________________________________________________________________")
                 print(f"__________ TIME TO ACTION: {time_to_action} seconds. __________")
