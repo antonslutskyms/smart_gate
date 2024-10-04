@@ -217,6 +217,16 @@ def dump_images(directory, image_filter,
     return images
 
 
+@app.route('/gate_ctrl')
+def gate_ctrl():
+    try:
+        with open("gate_ctrl.json") as out:
+            out.write(json.dumps({"is_enabled" : bool(request.args.get('enable'))}))
+    except:
+            print("WARNING: Unable to update gate ctrl")
+    
+    return "OK"
+
 @app.route('/gate')
 def gate():
 
@@ -356,7 +366,15 @@ def home():
 
     recent_events += "</table>"
 
-    return home_template.render(recent_events = recent_events, last_event=last_event, event_images = images)
+    is_enabled = True
+
+    if os.path.isfile("gate_ctrl.json"):
+        is_enabled = json.loads("gate_ctrl.json")["is_enabled"]
+
+    enable_disable = "Disable" if is_enabled else "Enable"
+
+    return home_template.render(recent_events = recent_events, last_event=last_event, 
+                                event_images = images, is_enabled=is_enabled, enable_disable=enable_disable )
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
