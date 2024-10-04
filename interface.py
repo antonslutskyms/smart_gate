@@ -334,7 +334,7 @@ def home():
     
             img_src = os.path.join(dir, image_path)
             print("Img Src: ", img_src)
-            recent_events += f"\n<img style='border:3px black solid' src='{img_src}' height='{}px'/>\n"
+            recent_events += f"\n<img style='border:3px black solid' src='{img_src}' height='{img_height}px'/>\n"
 
         recent_events += "</td>"
 
