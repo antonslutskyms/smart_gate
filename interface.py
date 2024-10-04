@@ -219,11 +219,10 @@ def dump_images(directory, image_filter,
 
 @app.route('/gate_ctrl')
 def gate_ctrl():
-    try:
-        with open("gate_ctrl.json") as out:
-            out.write(json.dumps({"is_enabled" : bool(request.args.get('enable'))}))
-    except:
-            print("WARNING: Unable to update gate ctrl")
+    #try:
+    with open("gate_ctrl.json") as out:
+        out.write(json.dumps({"is_enabled" : bool(request.args.get('enable'))}))
+    #
     
     return "OK"
 
