@@ -220,7 +220,7 @@ def dump_images(directory, image_filter,
 @app.route('/gate_ctrl')
 def gate_ctrl():
     #try:
-    with open("gate_ctrl.json") as out:
+    with open("gate_ctrl.json", "w") as out:
         out.write(json.dumps({"is_enabled" : bool(request.args.get('enable'))}))
     #
     
