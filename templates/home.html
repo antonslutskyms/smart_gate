@@ -11,7 +11,8 @@
                             function gate_ctrl(enabled){
                                 new Image().src='/gate_ctrl?enabled='+enabled;
                                 alert("Ctrl: "+enabled);
-                                window.location.reload();
+                                setTimeout(window.location.reload, 1000);
+                                
                             }
                         </script>
                         <input type="button" style="color: blue; float:left; height:50px;width:200px" value="{{enable_disable}} Gate"
