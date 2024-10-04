@@ -375,7 +375,7 @@ def home():
     enable_disable = "Disable" if is_enabled else "Enable"
 
     return home_template.render(recent_events = recent_events, last_event=last_event, 
-                                event_images = images, is_enabled=is_enabled, enable_disable=enable_disable )
+                                event_images = images, is_enabled=not is_enabled, enable_disable=enable_disable )
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
