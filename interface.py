@@ -224,7 +224,7 @@ def gate_ctrl():
         is_enabled = request.args.get('enabled')
         print("is_enabled: ", is_enabled)
 
-        is_enabled = True if is_enabled == "True" else "False"
+        is_enabled = True if is_enabled == "True" else False
         print("is_enabled: ", is_enabled)
 
         out.write(json.dumps({"is_enabled" : is_enabled}))
