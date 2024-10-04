@@ -221,7 +221,9 @@ def dump_images(directory, image_filter,
 def gate_ctrl():
     #try:
     with open("gate_ctrl.json", "w") as out:
-        out.write(json.dumps({"is_enabled" : bool(request.args.get('enable'))}))
+        is_enabled = request.args.get('enable')
+        print("is_enabled: ", is_enabled)
+        out.write(json.dumps({"is_enabled" : bool(is_enabled)}))
     #
     
     return "OK"
