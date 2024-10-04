@@ -369,7 +369,7 @@ def home():
     is_enabled = True
 
     if os.path.isfile("gate_ctrl.json"):
-        is_enabled = json.loads("gate_ctrl.json")["is_enabled"]
+        is_enabled = json.loads(open("gate_ctrl.json").read())["is_enabled"]
 
     enable_disable = "Disable" if is_enabled else "Enable"
 
