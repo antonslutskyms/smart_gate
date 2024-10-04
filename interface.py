@@ -271,7 +271,7 @@ def home():
 
     recent_events += "<tr>"
     recent_events += f"<th>Status</th>"
-    recent_events += f"<th with='15%'>Event ID</th>"
+    recent_events += f"<th width='15%'>Event ID</th>"
     recent_events += f"<th>Event Data</th>"
     recent_events += f"<th>Target</th>"
     recent_events += f"<th>TTA</th>"
