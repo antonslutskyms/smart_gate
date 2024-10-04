@@ -281,8 +281,12 @@ def home():
     recent_events += "</tr>\n"
 
 
-    for dir in directories[:20]:
+    cnt = 0
+    for dir in directories:
         
+        if cnt > 20:
+            break
+
         info_path = dir.replace("motions", "infos").replace("motion_", "info_")
         info_path = info_path +"/data_actions.json"
         
@@ -353,6 +357,7 @@ def home():
             recent_events += f"<td align='center' valign='center'>{round(event_data_collection_time)}</td>"
 
             recent_events += "</tr>\n"
+            cnt += 1
 
     recent_events += "</table>"
 
