@@ -223,7 +223,11 @@ def gate_ctrl():
     with open("gate_ctrl.json", "w") as out:
         is_enabled = request.args.get('enabled')
         print("is_enabled: ", is_enabled)
-        out.write(json.dumps({"is_enabled" : bool(is_enabled)}))
+
+        is_enabled = bool(is_enabled)
+        print("is_enabled: ", is_enabled)
+
+        out.write(json.dumps({"is_enabled" : is_enabled}))
     #
     
     return "OK"
