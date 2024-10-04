@@ -8,41 +8,52 @@
 import RPi.GPIO as GPIO
 from time import sleep
 
-
+import os
 import sys
+import json
 
-ctrl = int(sys.argv[1])
+enabled = True
 
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(22, GPIO.OUT)
+ctrl_file = "gate_ctrl.json"
 
-pwm=GPIO.PWM(22, 50)
-pwm.start(0)
+if os.path.isfile(ctrl_file):
+    enabled = json.loads(open(ctrl_file).read())["is_enabled"]
 
-def setAngle(angle):
-    duty = angle / 18 + 2
-    GPIO.output(22, True)
-    pwm.ChangeDutyCycle(duty)
-    sleep(1)
-    GPIO.output(22, False)
-    pwm.ChangeDutyCycle(duty)
+if enabled:
+    ctrl = int(sys.argv[1])
 
-count = 0
-numLoops = 1
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(22, GPIO.OUT)
 
-while count < numLoops:
-#    print("set to 0-deg")
-#    setAngle(0)
-#    sleep(1)
+    pwm=GPIO.PWM(22, 50)
+    pwm.start(0)
+
+    def setAngle(angle):
+        duty = angle / 18 + 2
+        GPIO.output(22, True)
+        pwm.ChangeDutyCycle(duty)
+        sleep(1)
+        GPIO.output(22, False)
+        pwm.ChangeDutyCycle(duty)
+
+    #count = 0
+    #numLoops = 1
+
+    #while count < numLoops:
+    #    print("set to 0-deg")
+    #    setAngle(0)
+    #    sleep(1)
 
 
     print("set to 135-deg")
     setAngle(ctrl)
-    sleep(1)
+    #sleep(1)
 
-#    setAngle(0)
+    #    setAngle(0)
 
-    count=count+1
+    #    count=count+1
 
-pwm.stop()
-GPIO.cleanup()
+    pwm.stop()
+    GPIO.cleanup()
+else:
+    print("WARNING: Gate operations disabled!")
