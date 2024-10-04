@@ -376,9 +376,9 @@ def home():
     if os.path.isfile("gate_ctrl.json"):
         is_enabled = json.loads(open("gate_ctrl.json").read())["is_enabled"]
 
-    print("!!!!!!!!!!", is_enabled)
-
     enable_disable = "Disable" if is_enabled else "Enable"
+
+    print("!!!!!!!!!!", is_enabled, enable_disable)
 
     return home_template.render(recent_events = recent_events, last_event=last_event, 
                                 event_images = images, is_enabled=(not is_enabled), enable_disable=enable_disable )
