@@ -281,16 +281,12 @@ def home():
     recent_events += "</tr>\n"
 
 
-    cnt = 0
-    for dir in directories:
-        
-        if cnt > 20:
-            break
-
+    for dir in directories[:20]:
+        recent_events += "<tr>"
         info_path = dir.replace("motions", "infos").replace("motion_", "info_")
         info_path = info_path +"/data_actions.json"
         
-        indicator = "Low&nbsp;Data"
+        indicator = "Ignored"
         indicator_color = "gray"
 
         print("INfofile: ", info_path)
@@ -303,10 +299,8 @@ def home():
         filtered_data_actions = []
         unfiltered_data_actions = []
 
-
-        if os.path.isfile(info_path):
-            recent_events += "<tr>"
-
+        has_data_actions = os.path.isfile(info_path)
+        if has_data_actions:
             info_js = open(info_path).read()
             print("JSON: ", info_js)
 
@@ -327,37 +321,36 @@ def home():
                 filtered_data_actions = info_file.get("filtered_data_actions", [])
             except:
                 print("Info structure unsupported: ", info_path, info_js)
-
-            indicator = f"<font style='color: {indicator_color}; font-weight: bold'>{indicator}</font>"
-
-            recent_events += f"<td>{indicator}</td>"
-            recent_events += f"<td><a href='copilot?event_id={dir}'>{dir}</a></td>"
-
-            recent_events += "<td width='40%'>"
-            for image_path in os.listdir(dir):
         
-                img_src = os.path.join(dir, image_path)
-                print("Img Src: ", img_src)
-                recent_events += f"\n<img style='border:3px black solid' src='{img_src}' height='70px'/>\n"
+        indicator = f"<font style='color: {indicator_color}; font-weight: bold'>{indicator}</font>"
 
-            recent_events += "</td>"
+        recent_events += f"<td>{indicator}</td>"
+        recent_events += f"<td><a href='copilot?event_id={dir}'>{dir}</a></td>"
+
+        recent_events += "<td width='40%'>"
+        for image_path in os.listdir(dir):
+    
+            img_src = os.path.join(dir, image_path)
+            print("Img Src: ", img_src)
+            recent_events += f"\n<img style='border:3px black solid' src='{img_src}' height='70px'/>\n"
+
+        recent_events += "</td>"
 
 
-            recent_events += "<td width='40%'>"
-            for image_path in unfiltered_data_actions:
-                border_color = "red" if image_path in filtered_data_actions else "gray"
-                img_src = os.path.join(dir, image_path["path"])
-                print("Img Src: ", img_src)
-                recent_events += f"<img style='border:3px {border_color} solid' src='{img_src}' height='70px'/>\n"
+        recent_events += "<td width='40%'>"
+        for image_path in unfiltered_data_actions:
+            border_color = "red" if image_path in filtered_data_actions else "gray"
+            img_src = os.path.join(dir, image_path["path"])
+            print("Img Src: ", img_src)
+            recent_events += f"<img style='border:3px {border_color} solid' src='{img_src}' height='70px'/>\n"
 
-            recent_events += "</td>"
-            recent_events += f"<td align='center' valign='center'>{round(time_to_action)}</td>"
-            recent_events += f"<td align='center' valign='center'>{round(llm_filtering_time)}</td>"
-            recent_events += f"<td align='center' valign='center'>{round(llm_response_time)}</td>"
-            recent_events += f"<td align='center' valign='center'>{round(event_data_collection_time)}</td>"
+        recent_events += "</td>"
+        recent_events += f"<td align='center' valign='center'>{round(time_to_action)}</td>"
+        recent_events += f"<td align='center' valign='center'>{round(llm_filtering_time)}</td>"
+        recent_events += f"<td align='center' valign='center'>{round(llm_response_time)}</td>"
+        recent_events += f"<td align='center' valign='center'>{round(event_data_collection_time)}</td>"
 
-            recent_events += "</tr>\n"
-            cnt += 1
+        recent_events += "</tr>\n"
 
     recent_events += "</table>"
 
