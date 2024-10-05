@@ -126,6 +126,9 @@ def process_event(self, src_path):
         
         if src_path not in self.event_threads:
 
+            info_path = src_path.replace("motions", "infos").replace("motion_", "info_")
+            info_path = info_path +"/data_actions.json"
+
             #say_it
             
             print(f"\n================ Recieved new event: {src_path}")
@@ -235,8 +238,7 @@ def process_event(self, src_path):
                 is_gate_open = maybe_act_on_llm_response(llm_response)
 
                 # Persisting llm results:
-                info_path = src_path.replace("motions", "infos").replace("motion_", "info_")
-                info_path = info_path +"/data_actions.json"
+
 
                 response_info = { "unfiltered_data_actions" : all_data_actions, 
                                                         "filtered_data_actions" : data_actions,
@@ -283,6 +285,7 @@ def process_event(self, src_path):
                 self.event_threads.remove(src_path)
                 self.last_process_started = datetime.datetime.now() - datetime.timedelta(seconds=ignore_events_timeout+1)
                 print("Now event threads: ", self.event_threads)
+                open(info_path, "w").write(json.dumps({"status" : "filtered_all"}))
         else:
             print("Race condition")
         
@@ -335,7 +338,7 @@ class EventHandler(FileSystemEventHandler):
 
                 with open(info_path, "w") as info_file:
                     info_file.write(json.dumps(data_actions))
-                    
+
             elif event.src_path != "./motions":
                 print(f"Event dropped: {event.src_path} ..............")
 
