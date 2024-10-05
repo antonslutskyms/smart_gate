@@ -315,12 +315,27 @@ class EventHandler(FileSystemEventHandler):
             if "motion_" in event.src_path and event.src_path not in self.event_threads:                
                 time_since_last_process = (event_ts - self.last_process_started).total_seconds() if self.last_process_started else 10000000
 
+                info_path = event.src_path.replace("motions", "infos").replace("motion_", "info_")
+                info_path = info_path +"/data_actions.json"
+
+                data_actions = {"status" : "validating"}
+
                 if time_since_last_process < ignore_events_timeout:
                     print(f"Ignoring event {event} after {time_since_last_process}s since last processing started.")
+                    
+                    data_actions["status"] = "post_action_timeout"
+                    
                 else:
                     print(f"Detected event: {event.src_path} ..............")
                     event_thread = threading.Thread(target = process_event, args = (self, event.src_path,))
+                    
+                    data_actions["status"] = "processing"
+                    
                     event_thread.start()
+
+                with open(info_path, "w") as info_file:
+                    info_file.write(json.dumps(data_actions))
+                    
             elif event.src_path != "./motions":
                 print(f"Event dropped: {event.src_path} ..............")
 

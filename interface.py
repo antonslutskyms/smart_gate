@@ -304,7 +304,7 @@ def home():
         indicator = "Ignored"
         indicator_color = "gray"
 
-        print("INfofile: ", info_path)
+        print("Info_file: ", info_path)
 
         time_to_action = -1
         llm_filtering_time = -1
@@ -322,6 +322,11 @@ def home():
             try:
                 info_file = json.loads(info_js)
                 print("Info file: ", info_file)
+
+                if "status" in info_file:
+                    indicator = info_file["status"]
+                    indicator_color = "black"
+
 
                 if "is_gate_open" in info_file:
                     is_gate_open = info_file["is_gate_open"] 
