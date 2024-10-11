@@ -145,7 +145,7 @@ def copilot():
     if os.path.isfile(info_path):
         data_info = json.loads(open(info_path).read())
 
-    filtered_images = [d["path"] for d in data_info["filtered_data_actions"]] if data_info else []
+    filtered_images = [d["path"] for d in data_info["filtered_data_actions"]] if data_info and "filtered_data_actions" in data_info else []
 
     image_filter_prompt = data_info["image_filter_prompt"] if data_info and "image_filter_prompt" in data_info else ""
     event_analysis_prompt = data_info["event_analysis_prompt"] if data_info and "event_analysis_prompt" in data_info else ""
@@ -380,12 +380,12 @@ def home():
 
     if os.path.isfile("gate_ctrl.json"):
         is_enabled = json.loads(open("gate_ctrl.json").read())["is_enabled"]
-        print(f"IIIIIIIIIIIIIIIIIIIIIIIIIIII |{is_enabled}|")
+        print(f"gate_ctrl.json: is_enabled |{is_enabled}|")
         #is_enabled = True if is_enabled else False
 
     enable_disable = "Disable" if is_enabled else "Enable"
 
-    print("!!!!!!!!!!", is_enabled, enable_disable)
+    print("is_enabled status", is_enabled, enable_disable)
 
     return home_template.render(recent_events = recent_events, last_event=last_event, 
                                 event_images = images, is_enabled=(not is_enabled), enable_disable=enable_disable )
