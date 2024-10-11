@@ -173,7 +173,7 @@ def process_event(self, src_path):
 
             image_filter_prompt = None
 
-            if False:
+            if True:
 
                 
                 analysis_prompt = filter_images_template.render()
