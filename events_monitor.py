@@ -144,7 +144,7 @@ def process_event(self, src_path):
             print("Waiting for event to populate.")
             print(f"Processing event: {src_path} events: {self.event_threads}")
 
-            t = 7
+            t = 5
             print("Observing gate for....")      
             
             event_data_collection_start = datetime.datetime.now()  
