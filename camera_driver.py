@@ -15,6 +15,8 @@ endpoint = os.getenv("VISION_ENDPOINT")
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
+SUPPORT_CONFIDENCE = 0.6
+
 if __name__ == "__main__":
 
     while True:
@@ -65,7 +67,7 @@ if __name__ == "__main__":
                             "confidence" : object.confidence
                         })
                         
-                        if object.object_property in SUPPORTED_OBJECTS and not supported_found and object.confidence > 0.8:
+                        if object.object_property in SUPPORTED_OBJECTS and not supported_found and object.confidence > SUPPORT_CONFIDENCE:
                             supported_found = True
                             print(f"Found supported object: {object.object_property}")
 
