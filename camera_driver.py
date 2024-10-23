@@ -15,7 +15,7 @@ endpoint = os.getenv("VISION_ENDPOINT")
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
-SUPPORT_CONFIDENCE = 0.6
+SUPPORT_CONFIDENCE = 0.65
 
 if __name__ == "__main__":
 
