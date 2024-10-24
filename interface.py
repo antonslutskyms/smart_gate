@@ -232,6 +232,15 @@ def gate_ctrl():
     
     return "OK"
 
+@app.route('/simulate')
+def simulate():
+
+    event_id = request.args.get('id')
+    print(f"Simulating event: {event_id}")
+    os.system(f"./simulate.sh {event_id}")
+
+    return "OK"
+
 @app.route('/gate')
 def gate():
 
