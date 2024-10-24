@@ -240,7 +240,7 @@ def simulate():
     print(f"Simulating event: {event_id}")
     os.system(f"./simulate.sh {event_id}")
 
-    return "OK"
+    return "OOOOOOK"
 
 @app.route('/gate')
 def gate():
