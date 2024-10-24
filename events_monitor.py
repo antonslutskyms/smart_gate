@@ -19,7 +19,7 @@ filter_images_template = env.get_template('filter_images_template.jinja')
 event_analysis_prompt_template = env.get_template('event_analysis_prompt.jinja')
 
 ignore_events_timeout = 60*3
-min_num_pics = 7
+min_num_pics = 100
 
 
 def say_it(text):
@@ -151,7 +151,11 @@ def process_event(self, src_path):
             
             for i in range(t):
                 print(f"{i} of {t} s")
+
+                
+                color_toggle("red", "on")
                 time.sleep(1)
+                color_toggle("red", "off")
 
                 num_pics = len(os.listdir(src_path))
                 print(f"Checking dir: {src_path} | Num Pics: {num_pics}")
@@ -159,6 +163,11 @@ def process_event(self, src_path):
                     print("Mimimum pics detected")
                     break
                 
+
+            for i in range(3):
+                color_toggle("red", "on")
+                color_toggle("red", "off")
+            
             event_process_start_ts = datetime.datetime.now()
             
             event_data_collection_time = (event_process_start_ts - event_data_collection_start).total_seconds()
