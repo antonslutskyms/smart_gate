@@ -289,6 +289,7 @@ def process_event(self, src_path):
                 print("Gate will close now.")
                 print("Getting more events")
                 gate_close()
+                color_toggle("red", "off")
             else:
                 #say_it("Not enough clear images.")
                 print("Not enough clear images")
