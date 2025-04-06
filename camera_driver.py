@@ -15,7 +15,8 @@ endpoint = os.getenv("VISION_ENDPOINT")
 
 computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
 
-SUPPORT_CONFIDENCE = 0.65
+#SUPPORT_CONFIDENCE = 0.65
+SUPPORT_CONFIDENCE = 0.9
 
 if __name__ == "__main__":
 
@@ -33,7 +34,8 @@ if __name__ == "__main__":
 
             motion_timeout = 7
 
-            SUPPORTED_OBJECTS = ["mammal", "cat", "animal", "person"]
+            #SUPPORTED_OBJECTS = ["mammal", "cat", "animal", "person"]
+            SUPPORTED_OBJECTS = ["cat", "person"]
 
             while True:
                 event_ts = datetime.datetime.now()
@@ -64,7 +66,7 @@ if __name__ == "__main__":
                         print(object.object_property, object.confidence)
                         found_objects.append({
                             "object_property" : object.object_property,
-                            "confidence" : object.confidence
+                            "confidence" : object.confidence,
                         })
                         
                         if object.object_property in SUPPORTED_OBJECTS and not supported_found and object.confidence > SUPPORT_CONFIDENCE:
