@@ -63,6 +63,7 @@ if __name__ == "__main__":
                     found_objects = []
 
                     for object in vision_response.objects:
+                        print("Recognition Response:", vision_response)
                         print(object.object_property, object.confidence)
                         found_objects.append({
                             "object_property" : object.object_property,
