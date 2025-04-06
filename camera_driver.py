@@ -64,14 +64,16 @@ if __name__ == "__main__":
 
                     for object in vision_response.objects:
                         print(object.object_property, object.confidence)
-                        found_objects.append({
+                        obj = {
                             "object_property" : object.object_property,
                             "confidence" : object.confidence,
-                        })
+                        }
+
+                        found_objects.append(obj)
                         
                         if object.object_property in SUPPORTED_OBJECTS and not supported_found and object.confidence > SUPPORT_CONFIDENCE:
                             supported_found = True
-                            print(f"Found supported object: {object.object_property}")
+                            print(f"Found supported object [{object.object_property}]: ", obj)
 
                     info_obj = {
                             "event_ts" : ts_now,
@@ -110,7 +112,7 @@ if __name__ == "__main__":
 
                         print(f"Motion recorded to: {motion_path}")
                     else:
-                        print(f"Ignoring [{ts_now}]")
+                        print(f"Ignoring [{ts_now}] -- no supported objects found")
 
                     
                 
