@@ -56,14 +56,13 @@ if __name__ == "__main__":
                     
                     vision_response = computervision_client.detect_objects_in_stream(io_buf)
 
-                    print(f"\nObjects analysis [{ts_now}]:")
+                    print(f"\nObjects analysis [{ts_now}]:", vision_response)
                     
                     supported_found = False
                     
                     found_objects = []
 
                     for object in vision_response.objects:
-                        print("Recognition Response:", vision_response)
                         print(object.object_property, object.confidence)
                         found_objects.append({
                             "object_property" : object.object_property,
