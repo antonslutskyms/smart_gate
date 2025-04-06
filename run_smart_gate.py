@@ -178,9 +178,9 @@ def llm_task(user_prompt, image_urls, system_prompt):
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
     print("\nSYSTEM PROMPT (INSTRUCTIONS):\n----------------------------------------------------------------------------------------")
-    print(system_prompt)
+    print("You are an AI agent that analyzes pictures of cats.")
     print("\n\nUSER PROMPT (IMAGES):\n----------------------------------------------------------------------------------------")
-    print(user_prompt)
+    print(system_prompt+"\n"+user_prompt)
     print("\n----------------------------------------------------------------------------------------")
 
     llm_start_ts = datetime.datetime.now()
