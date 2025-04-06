@@ -129,7 +129,7 @@ def render_prompt(data_actions, images_root_dir = "cat_pics"):
             images_urls.append(base64_image)
             print("image base64:", base64_image[:100])    
             data_action["path"] = f"<|image_{img_cnt}|>"
-            data_action["image_id"] = img_cnt-1
+            data_action["image_id"] = image_path
 
 
     prompt = template.render(data = data_actions)
